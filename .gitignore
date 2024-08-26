@@ -37,6 +37,10 @@ yarn-error.log
 testem.log
 /typings
 
+/_material
+!.frebase
+!.vscode
+
 # System files
 .DS_Store
 Thumbs.db
