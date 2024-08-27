@@ -1,0 +1,47 @@
+<div class="input--col">
+  @if (title) {
+    <label [for]="'label-' + id" class="input--label">
+      {{ title }}
+      <span *ngIf="subtitle">{{ subtitle }}</span>
+    </label>
+  }
+  <input
+    [id]="'label-' + id"
+    [name]="id"
+    [type]="type"
+    [autocomplete]="autocomplete"
+    [formControl]="control"
+    [value]="value"
+    [accept]="accept"
+    [placeholder]="placeholder"
+    [max]="max"
+    [min]="min"
+    [ngClass]="{
+      'input__text--error':
+        control.invalid && (control.dirty || control.touched),
+    }"
+    class="input__text"
+  />
+
+  <div
+    *ngIf="
+      getErrors().length !== 0 &&
+      control.invalid &&
+      (control.dirty || control.touched)
+    "
+    class="mt-1"
+  >
+    <div class="">
+      @for (error of getErrors(); track error) {
+        <div class="flex">
+          <div>
+            <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
+          </div>
+          <div class="ml-2">
+            {{ errorMessages[error] ?? error }}
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

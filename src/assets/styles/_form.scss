@@ -1,0 +1,110 @@
+$main-color: #43bac0;
+$hover-color: #66c6cb;
+
+@mixin inputDefault($paddingX, $paddingY) {
+  display: flex;
+  margin: 8px 0px;
+  flex-grow: 1; /* Allow the input to take up as much space as possible */
+  background: #eeeeee;
+  color: #212121;
+  vertical-align: middle;
+  font-size: 16px;
+  line-height: 2;
+  padding: $paddingX $paddingY;
+  border: 0;
+  outline: none;
+  box-shadow:
+    inset 0 -1px 1px -1px #cccccc,
+    inset 0 1px 1px -1px #cccccc,
+    inset 1px 0 1px -1px #cccccc;
+}
+.input {
+  display: flex;
+  width: 100%; /* Ensure the parent container takes the full width */
+
+  & ::placeholder {
+    color: #757575;
+    opacity: 1;
+  }
+
+  &--col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--label {
+    display: block;
+    margin-top: 8px;
+    font-size: 16px;
+  }
+
+  &__search {
+    @include inputDefault(8px, 14px);
+
+    &--submit {
+      background: $main-color;
+      color: #ffffff;
+      vertical-align: middle;
+      margin: 8px 0px;
+      padding: 0px 16px;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+      flex-shrink: 0; /* Prevent the submit button from shrinking */
+      & :hover {
+        background: $hover-color;
+      }
+      & i {
+        font-size: 24px;
+      }
+    }
+  }
+
+  &__text {
+    @include inputDefault(4px, 16px);
+    &--error {
+      border: 1px red;
+      & ::placeholder {
+        color: red;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Date input icon invert color
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+input:disabled {
+  background: #00000014;
+  border: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+input:disabled::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #616161;
+}
+input:disabled:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #616161;
+}
+input:disabled::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #616161;
+}
+input:disabled:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #616161;
+}

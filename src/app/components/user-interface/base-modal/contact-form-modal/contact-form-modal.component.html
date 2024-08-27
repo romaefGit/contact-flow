@@ -1,0 +1,47 @@
+<app-base-modal #dialog titleModal="Create new contact">
+  @if (initForm) {
+    <form id="contact-form" [formGroup]="contactForm">
+      <div class="contact">
+        <app-input-text
+          id="first_name"
+          title="First name"
+          [control]="getAsFormControl('first_name')"
+        />
+
+        <app-input-text
+          id="last_name"
+          title="Last name"
+          [control]="getAsFormControl('last_name')"
+        />
+
+        <app-input-text
+          id="phone"
+          title="Phone"
+          [control]="getAsFormControl('phone')"
+        />
+
+        <app-input-text
+          id="company"
+          title="Company"
+          [control]="getAsFormControl('company')"
+        />
+
+        <app-input-text
+          id="email"
+          title="e-mail"
+          [control]="getAsFormControl('email')"
+        />
+        <div class="w-full">
+          <app-button
+            theme="primary"
+            size="sm"
+            label="Save"
+            customWidth="100%"
+            buttonClass="mt-4"
+            (action)="submitForm()"
+          />
+        </div>
+      </div>
+    </form>
+  }
+</app-base-modal>

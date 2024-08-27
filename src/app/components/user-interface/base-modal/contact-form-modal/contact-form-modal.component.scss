@@ -1,0 +1,17 @@
+@import "../../../../../assets/styles/responsive";
+.contact {
+  width: 500px;
+  padding: 0px 24px;
+  padding-bottom: 16px;
+}
+
+@include --tablet {
+  .contact {
+    width: 300px;
+  }
+}
+@include --mobile {
+  .contact {
+    width: 80%;
+  }
+}

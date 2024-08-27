@@ -1,0 +1,65 @@
+@mixin generate-space-classes($alias, $property) {
+  @for $i from 1 through 10 {
+    .#{$alias}-#{$i} {
+      #{$property}: #{$i * 4px};
+    }
+  }
+}
+
+// margin
+@include generate-space-classes(
+  "mb",
+  "margin-bottom"
+); // Generates .mb-1 to .mb-10
+@include generate-space-classes(
+  "mt",
+  "margin-top"
+); // Generates .mt-1 to .mt-10
+@include generate-space-classes(
+  "ml",
+  "margin-left"
+); // Generates .ml-1 to .ml-10
+@include generate-space-classes(
+  "mr",
+  "margin-right"
+); // Generates .mr-1 to .mr-10
+@include generate-space-classes("m", "margin"); // Generates .m-1 to .m-10
+
+// Padding
+@include generate-space-classes(
+  "pb",
+  "padding-bottom"
+); // Generates .pb-1 to .pb-10
+@include generate-space-classes(
+  "pt",
+  "padding-top"
+); // Generates .pt-1 to .pt-10
+@include generate-space-classes(
+  "pl",
+  "padding-left"
+); // Generates .pl-1 to .pl-10
+@include generate-space-classes(
+  "pr",
+  "padding-right"
+); // Generates .pr-1 to .pr-10
+@include generate-space-classes("p", "padding"); // Generates .m-1 to .m-10
+
+.text-xs {
+  font-size: 8px;
+}
+.text-sm {
+  font-size: 12px;
+}
+.text-md {
+  font-size: 16px;
+}
+.text-lg {
+  font-size: 24px;
+}
+.text-xl {
+  font-size: 32px;
+}
+
+.error {
+  color: #ff6b6b;
+}

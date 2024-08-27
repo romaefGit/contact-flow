@@ -1,4 +1,7 @@
 @import "./assets/styles/fonts";
+@import "./assets/styles/form";
+@import "./assets/styles/helpers";
+
 :root {
   color-scheme: light dark;
 
@@ -7,16 +10,35 @@
 
   --dark-bg: #333333;
   --dark-color: #efefec;
+
+  --main-color: #43bac0;
+  --hover-color: #66c6cb;
 }
+
 body {
   font-family: "Montserrat-Regular";
   background-color: light-dark(var(--light-bg), var(--dark-bg));
   color: light-dark(var(--light-color), var(--dark-color));
 }
 
+// helpers
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
 .block {
   display: block;
 }
-.mb-4 {
-  margin-bottom: 16px;
+.flex {
+  display: flex;
+}
+.w-full {
+  width: 100%;
+}
+
+.right {
+  position: absolute;
+  right: 0px;
 }

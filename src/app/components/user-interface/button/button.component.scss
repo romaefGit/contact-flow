@@ -1,0 +1,143 @@
+$--border-radius: 4px;
+$--border-width: 2px;
+
+$--main-color: #43bac0;
+$--hover-color: #66c6cb;
+
+@mixin setSize($padding, $f-size) {
+  display: inline-block;
+  padding: $padding;
+  font-size: $f-size;
+}
+
+@mixin defaultButton() {
+  width: 150px;
+  border: transparent;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  z-index: 0;
+  border-radius: $--border-radius;
+
+  & i {
+    &.left {
+      padding-right: 4px;
+    }
+    &.right {
+      padding-left: 4px;
+    }
+  }
+  &:hover:not(:disabled) {
+    background: linear-gradient(to top right, #fff, #ddd);
+
+    &:hover:not(:disabled) {
+      color: white;
+      background: transparent;
+      position: relative;
+      z-index: 0;
+      border-radius: $--border-radius;
+
+      &::before {
+        border-radius: $--border-radius;
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        padding: $--border-width; //Border width
+        background: linear-gradient(to top right, #ddd, #fff);
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+    }
+
+    &:disabled {
+      background: transparent;
+      color: #ddd;
+
+      &::before {
+        border-radius: $--border-radius;
+
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        padding: $--border-width;
+        background: rgb(61 61 61);
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+    }
+  }
+}
+// THEMES
+.primary {
+  color: white;
+  background: $--main-color;
+  @include defaultButton();
+
+  &:hover:not(:disabled) {
+    background: $--hover-color;
+
+    &:hover:not(:disabled) {
+      color: white;
+      background: transparent;
+
+      &::before {
+        background: $--hover-color;
+      }
+    }
+  }
+}
+
+.secondary {
+  color: white;
+  @include defaultButton();
+
+  &::before {
+    background: linear-gradient(to top right, $--main-color, $--hover-color);
+  }
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(to top right, $--hover-color, $--main-color);
+  }
+}
+
+.tertiary {
+  color: white;
+  @include defaultButton();
+  border-radius: 5px;
+
+  &::before {
+    background: rgb(151 151 151);
+  }
+
+  &:hover::before {
+    border: $--main-color;
+    background: linear-gradient(to top right, $--main-color, $--hover-color);
+  }
+}
+// SIZES
+.xs {
+  @include setSize(8px, 12px);
+}
+.sm {
+  @include setSize(16px, 16px);
+}
+.md {
+  @include setSize(24px, 24px);
+}
+.lg {
+  @include setSize(32px, 32px);
+}

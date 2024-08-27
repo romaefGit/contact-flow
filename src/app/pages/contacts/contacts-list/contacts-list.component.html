@@ -1,8 +1,19 @@
 @defer (on viewport) {
   <div class="wrapper">
-    <div class="block mb-4">
+    <div class="mb-4 w-full">
+      <app-button
+        class="w-full"
+        theme="primary"
+        size="xs"
+        label="Add new contact"
+        iconName="fa-plus"
+        (click)="openCreateModal()"
+      ></app-button>
+    </div>
+    <div class="block mb-4 relative">
       <app-search-input></app-search-input>
     </div>
+
     <div class="table table--collapse">
       <div class="table-row table-row--head">
         <div class="table-cell name-cell cell-head">Name</div>
@@ -48,6 +59,10 @@
       }
     </div>
   </div>
+
+  <!-- Modals -->
+  <app-contact-form-modal #createContactModal title="Create new contact" />
+  <!-- <app-contact-form-modal #editContactModal title="Edit contact" /> -->
 } @placeholder {
   <p>placeholder</p>
 } @loading {
@@ -55,7 +70,3 @@
 } @error {
   <p>the contacts doesn't load anything man</p>
 }
-
-<html>
-  <body></body>
-</html>

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'contact-crud';
+}
+@Injectable({ providedIn: 'root' })
+export class ClickListenerService {
+  documentClickedTarget: Subject<HTMLElement> = new Subject<HTMLElement>();
 }

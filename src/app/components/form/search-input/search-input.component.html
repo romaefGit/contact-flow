@@ -1,12 +1,14 @@
-<div class="input-container">
+<div class="input">
   <input
     type="search"
-    class="search-input"
+    class="input__search"
     value=""
-    name="s"
+    name="search"
     placeholder="Search contacts"
+    [value]="searchTerm"
+    (keyup)="handleSearch($event)"
   />
-  <button type="submit" class="search-submit" name="submit">
-    <i class="material-icons">search</i>
+  <button type="submit" class="input__search--submit" name="submit">
+    <i class="fa fa-search" aria-hidden="true"></i>
   </button>
 </div>

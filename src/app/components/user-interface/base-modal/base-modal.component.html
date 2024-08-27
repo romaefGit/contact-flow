@@ -1,0 +1,14 @@
+<dialog #baseDialog class="dialog">
+  <div #dialogContent>
+    <div class="dialog__header">
+      <h1 class="dialog__header--title">{{ titleModal }}</h1>
+      @if (showCloseButton) {
+        <button class="dialog__header--close" (click)="closeDialog()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+      }
+    </div>
+
+    <ng-content></ng-content>
+  </div>
+</dialog>
