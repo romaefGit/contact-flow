@@ -1,0 +1,61 @@
+@defer (on viewport) {
+  <div class="wrapper">
+    <div class="block mb-4">
+      <app-search-input></app-search-input>
+    </div>
+    <div class="table table--collapse">
+      <div class="table-row table-row--head">
+        <div class="table-cell name-cell cell-head">Name</div>
+        <div class="table-cell cell-head">Phone</div>
+        <div class="table-cell cell-head">Company</div>
+        <div class="table-cell cell-head">E-mail</div>
+        <div class="table-cell cell-head">BirthDay</div>
+      </div>
+      @if ($contacts | async; as cons) {
+        @for (contact of cons; track contact.id) {
+          <div class="table-row">
+            <div class="table-cell name-cell highlighted">
+              <div class="table-cell--content title-content">
+                {{ contact.first_name + contact.last_name }}
+              </div>
+            </div>
+            <div class="table-cell">
+              <div class="table-cell--heading">Phone</div>
+              <div class="table-cell--content phone-content">
+                {{ contact.phone_number }}
+              </div>
+            </div>
+            <div class="table-cell">
+              <div class="table-cell--heading">Company</div>
+              <div class="table-cell--content company-content">
+                {{ contact.company }}
+              </div>
+            </div>
+            <div class="table-cell">
+              <div class="table-cell--heading">E-mail</div>
+              <div class="table-cell--content email-content">
+                {{ contact.email }}
+              </div>
+            </div>
+            <div class="table-cell table-cell--foot">
+              <div class="table-cell--heading">BirthDay</div>
+              <div class="table-cell--content date-content">
+                {{ contact.significant_date }}
+              </div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+} @placeholder {
+  <p>placeholder</p>
+} @loading {
+  <p>Loading detail</p>
+} @error {
+  <p>the contacts doesn't load anything man</p>
+}
+
+<html>
+  <body></body>
+</html>

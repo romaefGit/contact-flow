@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./assets/styles/fonts";
+:root {
+  color-scheme: light dark;
+
+  --light-bg: #efefec;
+  --light-color: #333333;
+
+  --dark-bg: #333333;
+  --dark-color: #efefec;
+}
+body {
+  font-family: "Montserrat-Regular";
+  background-color: light-dark(var(--light-bg), var(--dark-bg));
+  color: light-dark(var(--light-color), var(--dark-color));
+}
+
+.block {
+  display: block;
+}
+.mb-4 {
+  margin-bottom: 16px;
+}

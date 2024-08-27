@@ -1,0 +1,12 @@
+@defer (on viewport) {
+  @if (contactDetail$ | async; as contact) {
+    <h3>{{ contact.first_name }}</h3>
+    <h4>{{ contact.last_name }}</h4>
+  }
+} @placeholder {
+  <p>placeholder</p>
+} @loading {
+  <p>Loading detail</p>
+} @error {
+  <p>the detail doesn't load anything man</p>
+}
