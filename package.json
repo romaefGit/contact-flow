@@ -4,8 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "start:dev": "ng serve --configuration=development",
+    "start:qa": "ng serve --configuration=qa",
+    "start:prod": "ng serve --configuration=production",
+    "build": "ng build --configuration=production",
+    "build:production": "ng build --configuration=production",
+    "build:qa": "ng build --configuration=qa",
+    "watch": "ng build --watch --configuration=development",
     "test": "ng test",
     "server": "npx json-server rest-data.json"
   },

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map, tap, throwError } from 'rxjs';
 import { Contact, Contacts, Phone } from '../../models/contacts.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class ContactsService {
 
   // Fetch contacts from the server and filter out duplicates
   getContacts(): Observable<void> {
-    return this._http.get<Contact[]>('http://localhost:3000/contacts').pipe(
+    return this._http.get<Contact[]>(`${environment.api}/contacts`).pipe(
       map((res: Contact[]) => {
         // Filter out duplicates
         const newContacts = res.filter(
@@ -46,16 +47,6 @@ export class ContactsService {
     return this._http.get(`http://localhost:3000/contacts/${id}`);
   }
 
-  // saveContact(contact: Contact): Observable<any> {
-  //   let contactData = {
-  //     id: this.generateUniqueCode(16),
-  //     ...contact,
-  //   };
-  //   this.contacts.push(contactData);
-  //   this.contactsSubject.next(this.contacts);
-
-  //   return this._http.post(`http://localhost:3000/contacts/`, contactData);
-  // }
   saveContact(contact: Contact): Observable<any> {
     // Check if any of the contact's phone numbers already exist in the contacts array
     const existingContactPhone = this.contacts.find((existing: Contact) => {

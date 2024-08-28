@@ -38,7 +38,7 @@
                   <ul class="pl-0 mt-0 mb-0">
                     @for (item of contact.phones; track $index) {
                       <li class="w-full mb-2 ml-1">
-                        {{ item.phone }} - {{ item.phone_type?.name }}
+                        {{ item.phone }} - {{ item.phone_type.name }}
                       </li>
                     }
                   </ul>
