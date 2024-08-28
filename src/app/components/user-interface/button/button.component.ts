@@ -14,7 +14,7 @@ export class ButtonComponent {
   @Input() icon = '';
   @Input() iconColor = '#fff';
   @Input() iconName = '';
-  @Input() iconPosition: 'left' | 'right' = 'left';
+  @Input() iconPosition: 'left' | 'right' | 'center' = 'left';
   @Input() disabled = false;
   @Input() theme: ButtonTheme = 'primary';
   @Input() size!: 'xs' | 'sm' | 'md' | 'lg';

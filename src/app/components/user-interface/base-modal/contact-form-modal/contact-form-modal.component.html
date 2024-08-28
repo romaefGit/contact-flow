@@ -14,18 +14,58 @@
           [control]="getAsFormControl('last_name')"
         />
 
-        <app-input-text
-          id="phone"
-          title="Phone"
-          type="text"
-          [control]="getAsFormControl('phone')"
-        />
-        @if (typesList) {
-          <app-dropdown
-            [options]="typesList"
-            (action)="hearTypeSelected($event)"
-          />
-        }
+        <div formArrayName="phones">
+          @for (phone of phones.controls; track $index) {
+            <div class="phones" [formGroupName]="$index">
+              <div class="phones--col">
+                <app-input-text
+                  id="phone"
+                  title="Phone"
+                  type="text"
+                  [sentErrorOutside]="true"
+                  (errorOutMessage)="
+                    receiveErrorMessage({ index: $index, message: $event })
+                  "
+                  [control]="getPhoneControl($index, 'phone')"
+                />
+              </div>
+              @if (typesList) {
+                <div class="phones--col dropdown">
+                  <app-dropdown
+                    [options]="typesList"
+                    (action)="hearTypeSelected($event)"
+                  />
+                </div>
+              }
+              <div class="phones--col remove">
+                <a (click)="removePhone($index)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Error message display -->
+            @if (getPhoneError($index)) {
+              <div class="w-full">
+                <div class="mt-1">
+                  <div *ngFor="let item of phoneErrorMessages | keyvalue">
+                    <div class="flex">
+                      <div>
+                        <i
+                          class="fa fa-exclamation-circle error"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                      <div class="ml-2 text-sm error-message">
+                        {{ item.value }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+          <button (click)="addPhone()">Add Phone</button>
+        </div>
 
         <app-input-text
           id="company"

@@ -25,6 +25,7 @@
   />
 
   @if (
+    sentErrorOutside == false &&
     getErrors().length !== 0 &&
     control.invalid &&
     (control.dirty || control.touched)

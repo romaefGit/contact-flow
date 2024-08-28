@@ -8,11 +8,15 @@
   [class]="theme + ' ' + size + ' ' + buttonClass"
   [style.width]="customWidth"
 >
-  @if (iconName && iconPosition == "left") {
-    <i class="fa {{ iconName }} {{ iconPosition }}" aria-hidden="true"></i>
-  }
-  <span>{{ label }}</span>
-  @if (iconName && iconPosition == "right") {
-    <i class="fa {{ iconName }} {{ iconPosition }}" aria-hidden="true"></i>
+  @if (iconName && iconPosition == "center") {
+    <i class="fa {{ iconName }}" aria-hidden="true"></i>
+  } @else {
+    @if (iconName && iconPosition == "left") {
+      <i class="fa {{ iconName }} {{ iconPosition }}" aria-hidden="true"></i>
+    }
+    <span>{{ label }}</span>
+    @if (iconName && iconPosition == "right") {
+      <i class="fa {{ iconName }} {{ iconPosition }}" aria-hidden="true"></i>
+    }
   }
 </button>

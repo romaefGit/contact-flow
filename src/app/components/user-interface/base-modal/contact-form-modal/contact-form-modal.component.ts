@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input, inject } from '@angular/core';
 import { BaseModalComponent } from '../base-modal.component';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -15,7 +16,7 @@ import { Contacts } from '../../../../core/models/contacts.model';
 import { DropdownComponent } from '../../../form/dropdown/dropdown.component';
 import { TypesService } from '../../../../core/services/types/types.service';
 import { Type, Types } from '../../../../core/models/types.model';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe, KeyValuePipe, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-contact-form-modal',
@@ -27,6 +28,9 @@ import { AsyncPipe } from '@angular/common';
     ButtonComponent,
     DropdownComponent,
     AsyncPipe,
+    JsonPipe,
+    KeyValuePipe,
+    NgFor,
   ],
   templateUrl: './contact-form-modal.component.html',
   styleUrl: './contact-form-modal.component.scss',
@@ -46,6 +50,9 @@ export class ContactFormModalComponent implements OnInit {
   submitting: boolean = false;
   initForm: boolean = false;
   serverErrorMessage: string = '';
+  // Array to hold error messages for each phone group
+  phoneErrors: string[] = [];
+  phoneErrorMessages: any = {};
 
   phonePattern = /^\+?\d{10,15}$/; // Accepts '+573214567896' or '3214567896'
   wordPattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // words only
@@ -53,9 +60,10 @@ export class ContactFormModalComponent implements OnInit {
   ngOnInit(): void {
     this.typesService.getTypes().subscribe({
       next: (types) => {
-        console.log('types > ', types);
-
         this.typesList = types;
+      },
+      error: (err) => {
+        console.error(err);
       },
     });
     this.contactForm = this.fb.group({
@@ -64,8 +72,7 @@ export class ContactFormModalComponent implements OnInit {
         [Validators.required, Validators.pattern(this.wordPattern)],
       ],
       last_name: ['', Validators.pattern(this.wordPattern)],
-      phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
-      phone_type: [''],
+      phones: this.fb.array([this.createPhoneGroup()]),
       company: ['', Validators.pattern(this.wordPattern)],
       email: ['', [Validators.email]],
       notes: ['', Validators.pattern(this.wordPattern)],
@@ -84,6 +91,50 @@ export class ContactFormModalComponent implements OnInit {
     this.submitting = false;
     this.contactForm.reset();
     this.dialog.closeDialog();
+  }
+
+  createPhoneGroup(): FormGroup {
+    return this.fb.group({
+      phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
+      phone_type: [''],
+    });
+  }
+
+  get phones(): FormArray {
+    return this.contactForm.get('phones') as FormArray;
+  }
+
+  getPhonesAsFormGroup(index: number): FormGroup {
+    return this.phones.at(index) as FormGroup;
+  }
+
+  getPhoneControl(index: number, controlName: string): FormControl {
+    const phoneGroup = this.getPhonesAsFormGroup(index);
+    return phoneGroup.get(controlName) as FormControl;
+  }
+
+  receiveErrorMessage({ index, message }: { index: number; message: string }) {
+    console.log('message > ', message);
+
+    if (message !== null) {
+      this.phoneErrors[index] = message;
+    } else {
+      this.phoneErrorMessages = null;
+    }
+  }
+
+  getPhoneError(index: number) {
+    console.log('this.phoneErrors[index] > ', this.phoneErrors[index]);
+    this.phoneErrorMessages = this.phoneErrors[index];
+    return this.phoneErrors[index];
+  }
+
+  addPhone(): void {
+    this.phones.push(this.createPhoneGroup());
+  }
+
+  removePhone(index: number): void {
+    this.phones.removeAt(index);
   }
 
   submitForm() {

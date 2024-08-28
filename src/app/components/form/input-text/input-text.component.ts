@@ -1,4 +1,10 @@
-import { Component, forwardRef, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -39,9 +45,12 @@ export class InputTextComponent {
   @Input() value?: string;
   @Input() placeholder = '';
   @Input() disabled = false;
+  @Input() sentErrorOutside = false;
 
   @Input() max: any;
   @Input() min: any;
+
+  @Output() errorOutMessage = new EventEmitter<any>();
 
   getErrors(): string[] {
     if (!this.control || !this.control.errors) {
@@ -85,6 +94,15 @@ export class InputTextComponent {
       required: 'This field is required',
       ...this.errorMessages,
     };
+
+    if (this.sentErrorOutside && this.control.errors) {
+      console.log('this.control.errors > ', this.control.errors);
+
+      this.errorOutMessage.emit(this.errorMessages);
+    }
+    if (this.sentErrorOutside && !this.control.errors) {
+      this.errorOutMessage.emit(null);
+    }
 
     return Object.keys(this.control.errors);
   }
