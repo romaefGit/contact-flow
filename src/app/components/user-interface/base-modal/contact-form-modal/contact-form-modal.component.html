@@ -64,7 +64,16 @@
               </div>
             }
           }
-          <button (click)="addPhone()">Add Phone</button>
+          <app-button
+            (click)="addPhone()"
+            theme="primary"
+            size="sm"
+            label="Add Phone"
+            iconName="fa-plus"
+            iconPosition="left"
+            customWidth="100%"
+            buttonClass="mt-4"
+          />
         </div>
 
         <app-input-text
