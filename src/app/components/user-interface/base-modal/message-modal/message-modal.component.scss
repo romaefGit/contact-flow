@@ -1,0 +1,51 @@
+$info: #cde8f6;
+$info-text: #447eaf;
+$warn: #f8f4d5;
+$warn-text: #96722e;
+$error: #ecc8c5;
+$error-text: #b83c37;
+$success: #ddf3d5;
+$success-text: #597151;
+
+.message-box {
+  width: 440px;
+  border-radius: 6px;
+  margin: 15px 22px;
+
+  padding: auto 0;
+  position: relative;
+  i {
+    vertical-align: middle;
+    padding: 20px;
+    &.exit-button {
+      float: right;
+      opacity: 0.4;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+.message-text {
+  vertical-align: middle;
+}
+.message-box-info {
+  background-color: $info;
+  border: darken($info, 40%) 2px solid;
+  color: $info-text;
+}
+.message-box-warning {
+  background-color: $warn;
+  border: darken($warn, 20%) 2px solid;
+  color: $warn-text;
+}
+.message-box-error {
+  background-color: $error;
+  border: darken($error, 20%) 2px solid;
+  color: $error-text;
+}
+.message-box-success {
+  background-color: $success;
+  border: darken($success, 20%) 2px solid;
+  color: $success-text;
+}

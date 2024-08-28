@@ -26,6 +26,7 @@ import { TypesService } from '../../../../core/services/types/types.service';
 import { Type, Types } from '../../../../core/models/types.model';
 import { AsyncPipe, JsonPipe, KeyValuePipe, NgFor } from '@angular/common';
 import { InfoMessageComponent } from '../../info-message/info-message.component';
+import { MessageModalComponent } from '../message-modal/message-modal.component';
 
 @Component({
   selector: 'app-contact-form-modal',
@@ -42,13 +43,14 @@ import { InfoMessageComponent } from '../../info-message/info-message.component'
     KeyValuePipe,
     NgFor,
     InfoMessageComponent,
+    MessageModalComponent,
   ],
   templateUrl: './contact-form-modal.component.html',
   styleUrl: './contact-form-modal.component.scss',
 })
 export class ContactFormModalComponent implements OnInit {
   @ViewChild('dialog') dialog!: BaseModalComponent;
-  @Input() type: 'create' | 'update' = 'update';
+  @ViewChild('messageModal') messageModal!: MessageModalComponent;
 
   private readonly contactsService = inject(ContactsService);
   private readonly typesService = inject(TypesService);
@@ -62,6 +64,11 @@ export class ContactFormModalComponent implements OnInit {
   initForm: boolean = false;
   serverErrorMessage: string = '';
   phoneErrors: any[] = []; // Array to hold error messages for each phone group
+
+  serverMessage: any = {
+    type: 'success',
+    message: 'Success operation',
+  };
 
   phonePattern = /^\+?\d{10,15}$/; // Accepts '+573214567896' or '3214567896'
   wordPattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // words only
@@ -214,7 +221,7 @@ export class ContactFormModalComponent implements OnInit {
   setSelectedTypePhone(option: any, index: number): void {
     // Get the specific FormGroup at the provided index
     const phoneGroup = this.getPhonesAsFormGroup(index);
-    console.log('option to save > ', option);
+    // console.log('option to save > ', option);
 
     phoneGroup.get('phone_type')?.setValue(option);
   }
@@ -234,11 +241,16 @@ export class ContactFormModalComponent implements OnInit {
     if (!this.contactForm.invalid) {
       this.contactsService.saveContact(dataToSave).subscribe({
         next: (res) => {
-          console.log('res > ', res);
+          this.serverMessage.type = 'success';
+          this.serverMessage.message = 'The contact was saved successfully';
+          this.messageModal.openDialog();
+          // console.log('res > ', res);
         },
         error: (err) => {
-          this.serverErrorMessage = err;
-          console.log('err > ', err);
+          // this.serverMessage.type = 'error';
+          // this.serverMessage.message = err?.message
+          //   ? err.message
+          //   : 'Server error';
         },
         complete: () => {
           this.submitting = false;

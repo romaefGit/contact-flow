@@ -15,6 +15,7 @@ import { ContactFormModalComponent } from '../../../components/user-interface/ba
 import { Contact, Contacts } from '../../../core/models/contacts.model';
 import { EditContactFormComponent } from '../../../components/user-interface/base-modal/edit-contact-form/edit-contact-form.component';
 import { ContactActiveService } from '../../../core/services/contact-active/contact-active.service';
+import { MessageModalComponent } from '../../../components/user-interface/base-modal/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-contacts-list',
@@ -27,6 +28,7 @@ import { ContactActiveService } from '../../../core/services/contact-active/cont
     ContactFormModalComponent,
     EditContactFormComponent,
     NgClass,
+    MessageModalComponent,
   ],
   templateUrl: './contacts-list.component.html',
   styleUrl: './contacts-list.component.scss',
@@ -38,6 +40,8 @@ export class ContactsListComponent {
   @ViewChild('editContactModal')
   editContactModal!: ContactFormModalComponent;
 
+  @ViewChild('messageModal') messageModal!: MessageModalComponent;
+
   private readonly contactsService = inject(ContactsService);
   private readonly contactActiveService = inject(ContactActiveService);
   $contacts: Observable<Contacts> =
@@ -48,6 +52,11 @@ export class ContactsListComponent {
 
   contactToEdit!: any;
   openEdit: boolean = false;
+
+  serverMessage: any = {
+    type: 'success',
+    message: '',
+  };
 
   constructor() {}
 
@@ -96,18 +105,26 @@ export class ContactsListComponent {
 
   openEditContact(contact: Contact) {
     this.openEdit = true;
-    console.log('contact > ', contact);
+    // console.log('contact > ', contact);
 
     this.contactActiveService.updateContact(contact);
-    this.editContactModal.openDialog();
+    setTimeout(() => {
+      this.editContactModal.openDialog();
+    }, 0);
   }
 
   deleteContact(contact: any) {
     this.contactsService.deleteContact(contact.id).subscribe({
       next: (res) => {
-        console.log('res delete > ', res);
+        this.serverMessage.message = 'The contact was removed successfully';
+        this.messageModal.openDialog();
       },
       error: (err) => {
+        this.serverMessage.type = 'error';
+        this.serverMessage.message = err?.message
+          ? err.message
+          : 'Server error';
+        this.messageModal.openDialog();
         console.error('err > ', err);
       },
     });

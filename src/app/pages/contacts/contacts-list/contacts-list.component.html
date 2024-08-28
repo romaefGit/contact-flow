@@ -96,11 +96,18 @@
 
   <!-- Modals -->
   <app-contact-form-modal #createContactModal title="Create new contact" />
-  <app-edit-contact-form
-    #editContactModal
-    title="Edit contact"
-    (action)="hearClose($event)"
-  />
+  @if (openEdit) {
+    <app-edit-contact-form
+      #editContactModal
+      title="Edit contact"
+      (action)="hearClose($event)"
+    />
+  }
+  <app-message-modal
+    #messageModal
+    [type]="serverMessage.type"
+    [message]="serverMessage.message"
+  ></app-message-modal>
 } @placeholder {
   <p>placeholder</p>
 } @loading {

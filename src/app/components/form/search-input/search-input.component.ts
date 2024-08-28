@@ -29,4 +29,8 @@ export class SearchInputComponent {
 
     this.action.emit(e.target.value);
   }
+
+  search() {
+    this.action.emit(this.searchTerm);
+  }
 }

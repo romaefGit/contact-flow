@@ -27,6 +27,7 @@ import { InfoMessageComponent } from '../../info-message/info-message.component'
 import { Observable, Subscription, take, tap } from 'rxjs';
 import { ContactActiveService } from '../../../../core/services/contact-active/contact-active.service';
 import { Contact } from '../../../../core/models/contacts.model';
+import { MessageModalComponent } from '../message-modal/message-modal.component';
 
 @Component({
   selector: 'app-edit-contact-form',
@@ -42,6 +43,7 @@ import { Contact } from '../../../../core/models/contacts.model';
     KeyValuePipe,
     NgFor,
     InfoMessageComponent,
+    MessageModalComponent,
   ],
   standalone: true,
   templateUrl: './edit-contact-form.component.html',
@@ -49,6 +51,7 @@ import { Contact } from '../../../../core/models/contacts.model';
 })
 export class EditContactFormComponent implements OnInit, OnDestroy {
   @ViewChild('dialog') dialog!: BaseModalComponent;
+  @ViewChild('messageModal') messageModal!: MessageModalComponent;
   @Input() action = new EventEmitter<any>();
 
   contactToEdit: Contact | null = null;
@@ -63,8 +66,12 @@ export class EditContactFormComponent implements OnInit, OnDestroy {
   private fb: FormBuilder = inject(FormBuilder);
   submitting: boolean = false;
   initForm: boolean = false;
-  serverErrorMessage: string = '';
   phoneErrors: any[] = []; // Array to hold error messages for each phone group
+
+  serverMessage: any = {
+    type: 'success',
+    message: 'Success operation',
+  };
 
   phonePattern = /^\+?\d{10,15}$/; // Accepts '+573214567896' or '3214567896'
   wordPattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // words only
@@ -151,18 +158,23 @@ export class EditContactFormComponent implements OnInit, OnDestroy {
     dataToSave.id = this.contactToEdit?.id;
     dataToSave.phones = this.contactToEdit?.phones;
 
-    console.log('dataToSave > ', dataToSave);
+    // console.log('dataToSave > ', dataToSave);
 
-    console.log('this.contactFormEdit.invalid > ', this.contactForm.invalid);
+    // console.log('this.contactFormEdit.invalid > ', this.contactForm.invalid);
 
     if (!this.contactForm.invalid) {
       this.contactsService.updateContact(dataToSave).subscribe({
         next: (res) => {
-          console.log('res > ', res);
+          this.serverMessage.type = 'success';
+          this.serverMessage.message = 'Contact updated';
+          this.messageModal.openDialog();
         },
         error: (err) => {
-          this.serverErrorMessage = err;
-          console.log('err > ', err);
+          this.serverMessage.type = 'error';
+          this.serverMessage.message = err?.message
+            ? err.message
+            : 'Server error';
+          console.error('err > ', err);
         },
         complete: () => {
           this.closeDialog();

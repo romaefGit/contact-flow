@@ -1,4 +1,7 @@
-<dialog #baseDialog class="dialog">
+<dialog
+  #baseDialog
+  [ngClass]="{ dialog: !messageInfoType, 'info-message-type': messageInfoType }"
+>
   <div #dialogContent>
     <div class="dialog__header">
       <h1 class="dialog__header--title">{{ titleModal }}</h1>

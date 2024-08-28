@@ -79,6 +79,7 @@ export class ContactsService {
       id: this.generateUniqueCode(16),
       ...contact,
     };
+
     this.contacts.push(contactData);
     this.contactsSubject.next(this.contacts);
 

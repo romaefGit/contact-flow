@@ -51,6 +51,7 @@ export class BaseModalComponent {
   @Input() showCloseButton = true;
   @Input() titleModal = '';
   @Input() bgPersonalized = '';
+  @Input() messageInfoType: boolean = false;
   @Output() isOpened = new EventEmitter<any>();
   @Output() isClosed = new EventEmitter<any>();
 
@@ -84,6 +85,7 @@ export class BaseModalComponent {
         this.documentClickListener(target),
       );
   }
+
   ngAfterViewInit() {
     this.dialog.nativeElement.addEventListener('cancel', this.onCancel);
     this.dialog.nativeElement.addEventListener('close', this.onClose);
@@ -103,6 +105,11 @@ export class BaseModalComponent {
     this.dialog.nativeElement.showModal();
     this.isOpen = true;
     this.isOpened.emit();
+    if (this.messageInfoType) {
+      setTimeout(() => {
+        this.closeDialog();
+      }, 2000);
+    }
   }
 
   closeDialog() {

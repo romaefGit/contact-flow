@@ -8,7 +8,7 @@
     [value]="searchTerm"
     (keyup)="handleSearch($event)"
   />
-  <button type="submit" class="input__search--submit" name="submit">
+  <button type="button" class="input__search--submit" (click)="search()">
     <i class="fa fa-search" aria-hidden="true"></i>
   </button>
 </div>
