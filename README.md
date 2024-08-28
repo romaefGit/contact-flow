@@ -24,7 +24,7 @@ Clone the repo:
 
 - `git clone https://github.com/romaefGit/contact-flow.git`
 
-Execute `npm install` this on the root of the project using Node 18.
+Execute `npm install` on the root of the project using Node 18.
 
 ## Run App
 
@@ -45,7 +45,7 @@ http://localhost:3000/types
 
 You can see the demo as a work in progress, the server json doesn't work, so you could not add anything by now:
 
-- [contact-crud-roma](https://github.com/romaefGit/contact-flow.git) and if you liked, give me a star on the [Respository](https://github.com/romaefGit/contact-flow.git)
+- [contact-crud-roma](https://contact-crud-roma.web.app/contacts) and if you liked, give me a star on the [Respository](https://github.com/romaefGit/contact-flow.git)
 
 ## Code scaffolding
 
