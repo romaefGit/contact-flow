@@ -40,6 +40,11 @@
     & .dropdown {
       margin-top: 0;
     }
+    & .remove {
+      cursor: pointer;
+      margin-top: 0px;
+      margin-left: 8px;
+    }
   }
   .contact {
     width: 300px;
