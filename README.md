@@ -22,7 +22,7 @@ Special thanks go to:
 
 Clone the repo:
 
-- `git clone https://github.com/RomarioAugustoEstradaFlorez/geoAngular8`
+- `git clone https://github.com/romaefGit/contact-flow.git`
 
 Execute `npm install` this on the root of the project using Node 18.
 
