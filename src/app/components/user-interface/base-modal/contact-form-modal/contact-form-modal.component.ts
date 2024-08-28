@@ -20,9 +20,7 @@ import {
 } from '@angular/forms';
 import { InputTextComponent } from '../../../form/input-text/input-text.component';
 import { ButtonComponent } from '../../button/button.component';
-import { Observable, of } from 'rxjs';
 import { ContactsService } from '../../../../core/services/contacts/contacts.service';
-import { Contacts } from '../../../../core/models/contacts.model';
 import { DropdownComponent } from '../../../form/dropdown/dropdown.component';
 import { TypesService } from '../../../../core/services/types/types.service';
 import { Type, Types } from '../../../../core/models/types.model';
@@ -259,39 +257,6 @@ export class ContactFormModalComponent implements OnInit {
    */
   getAsFormControl(columnName: string) {
     return this.contactForm.get(columnName) as FormControl;
-  }
-
-  /**
-   * Validates that the date of birth is at least 13 years ago from today.
-   * This method is used to enforce a minimum age requirement.
-   * @param value The date of birth to validate.
-   * @returns `true` if the date of birth is valid (13 years or more), otherwise `false`.
-   */
-  validateDateOfBirth(value: any) {
-    const birthDate = new Date(value);
-    const today = new Date();
-    const maxAgeDate = new Date(
-      today.getFullYear() - 13,
-      today.getMonth(),
-      today.getDate(),
-    );
-    return birthDate <= maxAgeDate;
-  }
-
-  /**
-   * Checks if a given date is valid, ensuring it is at least 13 years ago from today.
-   * This method is similar to `validateDateOfBirth` but directly takes a Date object as input.
-   * @param date The date to validate.
-   * @returns `true` if the date is valid (13 years or more), otherwise `false`.
-   */
-  isValidDate(date: Date): boolean {
-    const today = new Date();
-    const maxAgeDate = new Date(
-      today.getFullYear() - 13,
-      today.getMonth(),
-      today.getDate(),
-    );
-    return date <= maxAgeDate;
   }
 
   /**

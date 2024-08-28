@@ -85,6 +85,54 @@ export class ContactsService {
     return this._http.post(`${environment.api}/contacts`, contactData);
   }
 
+  updateContact(contact: Contact): Observable<any> {
+    // Find the contact to be updated
+    const contactToUpdate = this.contacts.find(
+      (existing: Contact) => existing.id === contact.id,
+    );
+
+    if (!contactToUpdate) {
+      return throwError(() => new Error('Contact not found'));
+    }
+
+    // Check if any of the updated contact's phone numbers already exist in other contacts
+    const existingContactPhone = this.contacts.find(
+      (existing: Contact) =>
+        existing.id !== contact.id &&
+        existing.phones.some((existingPhone: Phone) =>
+          contact.phones.some(
+            (newPhone: Phone) => newPhone.phone === existingPhone.phone,
+          ),
+        ),
+    );
+
+    // Check if the updated contact's email already exists in other contacts
+    const existingContactEmail = this.contacts.find(
+      (existing: Contact) =>
+        existing.id !== contact.id && existing.email === contact.email,
+    );
+
+    if (existingContactPhone) {
+      return throwError(
+        () => new Error('Contact with the same phone number already exists'),
+      );
+    }
+
+    if (existingContactEmail) {
+      return throwError(
+        () => new Error('Contact with the same email already exists'),
+      );
+    }
+
+    // Update the contact
+    Object.assign(contactToUpdate, contact);
+
+    // Update the contact in the array and notify subscribers
+    this.contactsSubject.next(this.contacts);
+
+    return this._http.put(`${environment.api}/contacts/${contact.id}`, contact);
+  }
+
   // Methods
   private generateUniqueCode(length: number) {
     var characters = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789'";

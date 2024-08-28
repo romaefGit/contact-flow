@@ -12,7 +12,8 @@ import { RouterLink } from '@angular/router';
 import { SearchInputComponent } from '../../../components/form/search-input/search-input.component';
 import { ButtonComponent } from '../../../components/user-interface/button/button.component';
 import { ContactFormModalComponent } from '../../../components/user-interface/base-modal/contact-form-modal/contact-form-modal.component';
-import { Contacts } from '../../../core/models/contacts.model';
+import { Contact, Contacts } from '../../../core/models/contacts.model';
+import { EditContactFormComponent } from '../../../components/user-interface/base-modal/edit-contact-form/edit-contact-form.component';
 
 @Component({
   selector: 'app-contacts-list',
@@ -23,6 +24,7 @@ import { Contacts } from '../../../core/models/contacts.model';
     SearchInputComponent,
     ButtonComponent,
     ContactFormModalComponent,
+    EditContactFormComponent,
   ],
   templateUrl: './contacts-list.component.html',
   styleUrl: './contacts-list.component.scss',
@@ -40,6 +42,8 @@ export class ContactsListComponent {
 
   $filteredContacts: Observable<Contacts> = of([]); // Observable for the filtered contacts
   searchTerm: string = '';
+
+  contactToEdit!: any;
 
   constructor() {}
 
@@ -86,5 +90,18 @@ export class ContactsListComponent {
 
   openCreateModal() {
     this.createContactModal.openDialog();
+  }
+
+  openEditContact(contact: Contact) {
+    this.contactToEdit = contact;
+    setTimeout(() => {
+      this.editContactModal.openDialog();
+    }, 0);
+  }
+
+  hearClose(e: any) {
+    console.log('closi');
+
+    this.contactToEdit = null;
   }
 }

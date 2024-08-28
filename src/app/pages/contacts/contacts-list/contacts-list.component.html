@@ -22,6 +22,7 @@
         <div class="table-cell cell-head">Company</div>
         <div class="table-cell cell-head">E-mail</div>
         <div class="table-cell cell-head">Notes</div>
+        <div class="table-cell cell-head">Action</div>
       </div>
       @if ($filteredContacts | async; as cons) {
         @for (contact of cons; track contact.id) {
@@ -48,19 +49,31 @@
             <div class="table-cell">
               <div class="table-cell--heading">Company</div>
               <div class="table-cell--content company-content">
-                {{ contact.company }}
+                {{ contact.company ? contact.company : "------" }}
               </div>
             </div>
             <div class="table-cell">
               <div class="table-cell--heading">E-mail</div>
               <div class="table-cell--content email-content">
-                {{ contact.email }}
+                {{ contact.email ? contact.email : "------" }}
               </div>
             </div>
             <div class="table-cell table-cell--foot">
               <div class="table-cell--heading">Notes</div>
               <div class="table-cell--content date-content">
-                {{ contact.notes }}
+                {{ contact.notes ? contact.notes : "------" }}
+              </div>
+            </div>
+            <div class="table-cell table-cell--foot">
+              <div class="table-cell--heading">Actions</div>
+              <div class="table-cell--content date-content">
+                <app-button
+                  theme="primary"
+                  size="xs"
+                  label=""
+                  iconName="fa-edit"
+                  (click)="openEditContact(contact)"
+                />
               </div>
             </div>
           </div>
@@ -71,7 +84,14 @@
 
   <!-- Modals -->
   <app-contact-form-modal #createContactModal title="Create new contact" />
-  <!-- <app-contact-form-modal #editContactModal title="Edit contact" /> -->
+  @if (contactToEdit) {
+    <app-edit-contact-form
+      #editContactModal
+      title="Edit contact"
+      [contactToEdit]="contactToEdit"
+      (action)="hearClose($event)"
+    />
+  }
 } @placeholder {
   <p>placeholder</p>
 } @loading {
