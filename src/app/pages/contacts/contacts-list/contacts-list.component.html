@@ -25,8 +25,8 @@
         <div class="table-cell cell-head">Action</div>
       </div>
       @if ($filteredContacts | async; as cons) {
-        @for (contact of cons; track contact.id) {
-          <div class="table-row">
+        @for (contact of cons; track $index; let e = $even) {
+          <div class="table-row" [ngClass]="{ even: e }">
             <div class="table-cell name-cell highlighted">
               <div class="table-cell--content title-content">
                 {{ contact.first_name + " " + contact.last_name }}
@@ -60,19 +60,31 @@
             </div>
             <div class="table-cell table-cell--foot">
               <div class="table-cell--heading">Notes</div>
-              <div class="table-cell--content date-content">
+              <div class="table-cell--content">
                 {{ contact.notes ? contact.notes : "------" }}
               </div>
             </div>
             <div class="table-cell table-cell--foot">
               <div class="table-cell--heading">Actions</div>
-              <div class="table-cell--content date-content">
+              <div class="table-cell--content">
                 <app-button
                   theme="primary"
                   size="xs"
                   label=""
-                  iconName="fa-edit"
+                  iconName="fa-pencil"
+                  iconPosition="center"
+                  iconClass="text-lg pl-1 pr-1"
                   (click)="openEditContact(contact)"
+                />
+                <app-button
+                  class="ml-4"
+                  theme="danger"
+                  size="xs"
+                  label=""
+                  iconName="fa-trash"
+                  iconPosition="center"
+                  iconClass="text-lg pl-1 pr-1"
+                  (click)="deleteContact(contact)"
                 />
               </div>
             </div>
@@ -84,14 +96,11 @@
 
   <!-- Modals -->
   <app-contact-form-modal #createContactModal title="Create new contact" />
-  @if (contactToEdit) {
-    <app-edit-contact-form
-      #editContactModal
-      title="Edit contact"
-      [contactToEdit]="contactToEdit"
-      (action)="hearClose($event)"
-    />
-  }
+  <app-edit-contact-form
+    #editContactModal
+    title="Edit contact"
+    (action)="hearClose($event)"
+  />
 } @placeholder {
   <p>placeholder</p>
 } @loading {

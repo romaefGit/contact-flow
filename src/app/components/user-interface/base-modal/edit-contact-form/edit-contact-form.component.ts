@@ -6,6 +6,7 @@ import {
   inject,
   ChangeDetectionStrategy,
   EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { BaseModalComponent } from '../base-modal.component';
 import {
@@ -23,6 +24,9 @@ import { TypesService } from '../../../../core/services/types/types.service';
 import { Types } from '../../../../core/models/types.model';
 import { AsyncPipe, JsonPipe, KeyValuePipe, NgFor } from '@angular/common';
 import { InfoMessageComponent } from '../../info-message/info-message.component';
+import { Observable, Subscription, take, tap } from 'rxjs';
+import { ContactActiveService } from '../../../../core/services/contact-active/contact-active.service';
+import { Contact } from '../../../../core/models/contacts.model';
 
 @Component({
   selector: 'app-edit-contact-form',
@@ -43,16 +47,17 @@ import { InfoMessageComponent } from '../../info-message/info-message.component'
   templateUrl: './edit-contact-form.component.html',
   styleUrl: './edit-contact-form.component.scss',
 })
-export class EditContactFormComponent implements OnInit {
+export class EditContactFormComponent implements OnInit, OnDestroy {
   @ViewChild('dialog') dialog!: BaseModalComponent;
-  @Input() contactToEdit!: any;
   @Input() action = new EventEmitter<any>();
+
+  contactToEdit: Contact | null = null;
+  private subscription!: Subscription;
 
   private readonly contactsService = inject(ContactsService);
   private readonly typesService = inject(TypesService);
+  private readonly contactActiveService = inject(ContactActiveService);
   typesList: Types = [];
-
-  dialogOpened: boolean = false;
 
   contactForm!: FormGroup;
   private fb: FormBuilder = inject(FormBuilder);
@@ -85,29 +90,30 @@ export class EditContactFormComponent implements OnInit {
       // ),
       company: new FormControl('', Validators.pattern(this.wordPattern)),
       email: new FormControl('', [Validators.email]),
-      notes: new FormControl('', Validators.pattern(this.wordPattern)),
+      notes: new FormControl(''),
     });
 
     this.initForm = true;
   }
 
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    setTimeout(() => {
-      this.contactForm.patchValue({
-        first_name: this.contactToEdit.first_name,
-        last_name: this.contactToEdit.last_name,
-        company: this.contactToEdit.company,
-        email: this.contactToEdit.email,
-        notes: this.contactToEdit.notes,
-      });
-    }, 500);
+  dialogOpened(e: any) {
+    this.initForm = true;
+    this.subscription = this.contactActiveService.contactToEdit$.subscribe(
+      (contact) => {
+        this.contactToEdit = contact;
+        this.patchForm();
+      },
+    );
+  }
 
-    // console.log('this.contactForm > ', this.contactForm.value);
-    // this.contactForm.valueChanges.subscribe((res) => {
-    //   console.log('res > ', res);
-    // });
+  patchForm() {
+    this.contactForm.patchValue({
+      first_name: this.contactToEdit?.first_name,
+      last_name: this.contactToEdit?.last_name,
+      company: this.contactToEdit?.company,
+      email: this.contactToEdit?.email,
+      notes: this.contactToEdit?.notes,
+    });
   }
 
   /**
@@ -115,7 +121,12 @@ export class EditContactFormComponent implements OnInit {
    * This method is typically called when the user initiates a create or update action.
    */
   openDialog() {
-    this.contactForm.reset();
+    this.subscription = this.contactActiveService.contactToEdit$.subscribe(
+      (contact) => {
+        this.contactToEdit = contact;
+      },
+    );
+    this.patchForm();
     this.dialog.openDialog();
   }
 
@@ -124,8 +135,9 @@ export class EditContactFormComponent implements OnInit {
    * This method is typically called when the user cancels an action.
    */
   closeDialog() {
-    this.contactForm.reset();
+    this.initForm = false;
     this.dialog.closeDialog();
+    this.subscription.unsubscribe();
   }
 
   /**
@@ -136,8 +148,8 @@ export class EditContactFormComponent implements OnInit {
   submitForm() {
     this.markAllControlsAsTouched(this.contactForm);
     const dataToSave = this.contactForm.value;
-    dataToSave.id = this.contactToEdit.id;
-    dataToSave.phones = this.contactToEdit.phones;
+    dataToSave.id = this.contactToEdit?.id;
+    dataToSave.phones = this.contactToEdit?.phones;
 
     console.log('dataToSave > ', dataToSave);
 
@@ -153,11 +165,9 @@ export class EditContactFormComponent implements OnInit {
           console.log('err > ', err);
         },
         complete: () => {
-          this.submitting = false;
           this.closeDialog();
         },
       });
-      this.contactsService.getContactsObservable();
     }
   }
 
@@ -186,5 +196,9 @@ export class EditContactFormComponent implements OnInit {
         control?.markAsTouched();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

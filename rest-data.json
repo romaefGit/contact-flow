@@ -1,9 +1,12 @@
 {
   "contacts": [
     {
-      "id": "G6DhUZ4gM9EKcpW",
       "first_name": "Laura",
       "last_name": "Johnson",
+      "company": "GreenWave",
+      "email": "laura.j@gmail.com",
+      "notes": "asdasdasd olo a",
+      "id": "G6DhUZ4gM9EKcpW",
       "phones": [
         {
           "phone": "12312312233",
@@ -19,19 +22,14 @@
             "name": "Personal"
           }
         }
-      ],
-      "company": "GreenWave",
-      "email": "laura.j@gmail.com",
-      "email_type": {
-        "name": "Home"
-      }
+      ]
     },
     {
       "first_name": "Romario",
       "last_name": "Estrada Florez",
       "company": "No one",
       "email": "romaef23@gmail.com",
-      "notes": "Something",
+      "notes": "Algo asd",
       "id": "ftK8qDKg8hJIWZii",
       "phones": [
         {
@@ -44,52 +42,35 @@
       ]
     },
     {
-      "id": "HDIABAUbEIigpHkc",
-      "first_name": "Otro",
-      "last_name": "sumerce",
+      "first_name": "Roma",
+      "last_name": "new",
+      "company": "Some",
+      "email": "epa@larepa.com",
+      "notes": "asdassa",
+      "id": "G6GaIRedZ4UwvkA6",
       "phones": [
         {
-          "phone": "32100303030",
+          "phone": "12313123123",
           "phone_type": {
-            "id": "390d",
-            "name": "Office"
+            "id": "2689",
+            "name": "Work"
           }
         },
         {
-          "phone": "+57456389322",
+          "phone": "213123123122",
+          "phone_type": {
+            "id": "1359",
+            "name": "Personal"
+          }
+        },
+        {
+          "phone": "123123124444",
           "phone_type": {
             "id": "0f8f",
             "name": "Other"
           }
         }
-      ],
-      "company": "Hey",
-      "email": "hey@tes.com",
-      "notes": "asdasdasd"
-    },
-    {
-      "id": "XbNcheH9XuzH'IYr",
-      "first_name": "hey",
-      "last_name": "asdas",
-      "phones": [
-        {
-          "phone": "12312312312",
-          "phone_type": {
-            "id": "1359",
-            "name": "Personal"
-          }
-        },
-        {
-          "phone": "12312312312",
-          "phone_type": {
-            "id": "1359",
-            "name": "Personal"
-          }
-        }
-      ],
-      "company": null,
-      "email": null,
-      "notes": null
+      ]
     }
   ],
   "types": [

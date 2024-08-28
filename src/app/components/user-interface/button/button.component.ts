@@ -11,8 +11,7 @@ export class ButtonComponent {
   @Input({ required: true }) label = 'Button';
   @Input() customWidth = '';
   @Input() buttonClass = '';
-  @Input() icon = '';
-  @Input() iconColor = '#fff';
+  @Input() iconClass = '';
   @Input() iconName = '';
   @Input() iconPosition: 'left' | 'right' | 'center' = 'left';
   @Input() disabled = false;
@@ -40,4 +39,4 @@ export class ButtonComponent {
   }
 }
 
-export type ButtonTheme = 'primary' | 'secondary' | 'tertiary';
+export type ButtonTheme = 'primary' | 'secondary' | 'tertiary' | 'danger';

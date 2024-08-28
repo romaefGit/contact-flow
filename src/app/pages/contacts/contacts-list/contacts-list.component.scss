@@ -35,8 +35,13 @@ $heading-color: #43bac0;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
 
   &-row {
+    cursor: pointer;
     width: 100%;
     display: flex;
+
+    &.even {
+      background-color: #404040;
+    }
   }
 
   &-cell {

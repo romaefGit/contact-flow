@@ -133,6 +133,28 @@ export class ContactsService {
     return this._http.put(`${environment.api}/contacts/${contact.id}`, contact);
   }
 
+  deleteContact(contactId: string): Observable<any> {
+    console.log('contactId > ', contactId);
+
+    // Find the index of the contact with the given ID
+    const contactIndex = this.contacts.findIndex(
+      (existing: Contact) => existing.id === contactId,
+    );
+
+    if (contactIndex === -1) {
+      return throwError(() => new Error('Contact not found'));
+    }
+
+    // Remove the contact from the contacts array
+    this.contacts.splice(contactIndex, 1);
+
+    // Notify subscribers about the updated contacts list
+    this.contactsSubject.next(this.contacts);
+
+    // Send DELETE request to the server
+    return this._http.delete(`${environment.api}/contacts/${contactId}`);
+  }
+
   // Methods
   private generateUniqueCode(length: number) {
     var characters = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789'";

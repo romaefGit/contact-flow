@@ -7,13 +7,14 @@ import {
 } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SearchInputComponent } from '../../../components/form/search-input/search-input.component';
 import { ButtonComponent } from '../../../components/user-interface/button/button.component';
 import { ContactFormModalComponent } from '../../../components/user-interface/base-modal/contact-form-modal/contact-form-modal.component';
 import { Contact, Contacts } from '../../../core/models/contacts.model';
 import { EditContactFormComponent } from '../../../components/user-interface/base-modal/edit-contact-form/edit-contact-form.component';
+import { ContactActiveService } from '../../../core/services/contact-active/contact-active.service';
 
 @Component({
   selector: 'app-contacts-list',
@@ -25,6 +26,7 @@ import { EditContactFormComponent } from '../../../components/user-interface/bas
     ButtonComponent,
     ContactFormModalComponent,
     EditContactFormComponent,
+    NgClass,
   ],
   templateUrl: './contacts-list.component.html',
   styleUrl: './contacts-list.component.scss',
@@ -37,6 +39,7 @@ export class ContactsListComponent {
   editContactModal!: ContactFormModalComponent;
 
   private readonly contactsService = inject(ContactsService);
+  private readonly contactActiveService = inject(ContactActiveService);
   $contacts: Observable<Contacts> =
     this.contactsService.getContactsObservable();
 
@@ -44,19 +47,18 @@ export class ContactsListComponent {
   searchTerm: string = '';
 
   contactToEdit!: any;
+  openEdit: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.contactsService.getContacts().subscribe();
     this.contactsService.getContacts().subscribe(() => {
       this.updateFilteredContacts();
     });
   }
 
   private updateFilteredContacts() {
-    console.log('this.searchTerm > ');
-
+    // console.log('this.searchTerm > ');
     this.$filteredContacts = this.contactsService
       .getContactsObservable()
       .pipe(map((contacts) => this.filterContacts(contacts)));
@@ -68,7 +70,7 @@ export class ContactsListComponent {
     }
 
     const query = this.searchTerm.toLowerCase();
-    console.log('query > ', query);
+    // console.log('query > ', query);
 
     return contacts.filter((contact) => {
       return (
@@ -93,15 +95,26 @@ export class ContactsListComponent {
   }
 
   openEditContact(contact: Contact) {
-    this.contactToEdit = contact;
-    setTimeout(() => {
-      this.editContactModal.openDialog();
-    }, 0);
+    this.openEdit = true;
+    console.log('contact > ', contact);
+
+    this.contactActiveService.updateContact(contact);
+    this.editContactModal.openDialog();
+  }
+
+  deleteContact(contact: any) {
+    this.contactsService.deleteContact(contact.id).subscribe({
+      next: (res) => {
+        console.log('res delete > ', res);
+      },
+      error: (err) => {
+        console.error('err > ', err);
+      },
+    });
   }
 
   hearClose(e: any) {
-    console.log('closi');
-
+    this.openEdit = false;
     this.contactToEdit = null;
   }
 }

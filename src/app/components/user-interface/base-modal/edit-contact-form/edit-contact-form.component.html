@@ -1,10 +1,10 @@
 <app-base-modal
   #dialog
   titleModal="Edit contact"
-  (isOpened)="dialogOpened = true"
+  (isOpened)="dialogOpened($event)"
   (isClosed)="action.emit()"
 >
-  @if (initForm && dialogOpened) {
+  @if (initForm && contactForm) {
     <form id="contact-form" [formGroup]="contactForm">
       <div class="contact">
         <app-input-text

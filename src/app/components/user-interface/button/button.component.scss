@@ -1,9 +1,6 @@
 $--border-radius: 4px;
 $--border-width: 2px;
 
-$--main-color: #43bac0;
-$--hover-color: #66c6cb;
-
 @mixin setSize($padding, $f-size) {
   display: inline-block;
   padding: $padding;
@@ -27,7 +24,7 @@ $--hover-color: #66c6cb;
     }
   }
   &:hover:not(:disabled) {
-    background: linear-gradient(to top right, #fff, #ddd);
+    background: #ddd;
 
     &:hover:not(:disabled) {
       color: white;
@@ -43,15 +40,7 @@ $--hover-color: #66c6cb;
         z-index: -1;
         inset: 0;
         padding: $--border-width; //Border width
-        background: linear-gradient(to top right, #ddd, #fff);
-        -webkit-mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
-        mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
+        background: #fff;
       }
     }
 
@@ -67,15 +56,7 @@ $--hover-color: #66c6cb;
         z-index: -1;
         inset: 0;
         padding: $--border-width;
-        background: rgb(61 61 61);
-        -webkit-mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
-        mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
+        background: #fff;
       }
     }
   }
@@ -83,18 +64,18 @@ $--hover-color: #66c6cb;
 // THEMES
 .primary {
   color: white;
-  background: $--main-color;
+  background: var(--main-color);
   @include defaultButton();
 
   &:hover:not(:disabled) {
-    background: $--hover-color;
+    background: var(--hover-color);
 
     &:hover:not(:disabled) {
       color: white;
       background: transparent;
 
       &::before {
-        background: $--hover-color;
+        background: var(--hover-color);
       }
     }
   }
@@ -105,11 +86,19 @@ $--hover-color: #66c6cb;
   @include defaultButton();
 
   &::before {
-    background: linear-gradient(to top right, $--main-color, $--hover-color);
+    background: linear-gradient(
+      to top right,
+      var(--main-color),
+      var(--hover-color)
+    );
   }
 
   &:hover:not(:disabled) {
-    background: linear-gradient(to top right, $--hover-color, $--main-color);
+    background: linear-gradient(
+      to top right,
+      var(--hover-color),
+      var(--main-color)
+    );
   }
 }
 
@@ -123,8 +112,31 @@ $--hover-color: #66c6cb;
   }
 
   &:hover::before {
-    border: $--main-color;
-    background: linear-gradient(to top right, $--main-color, $--hover-color);
+    border: var(--main-color);
+    background: linear-gradient(
+      to top right,
+      var(--main-color),
+      var(--hover-color)
+    );
+  }
+}
+
+.danger {
+  color: white;
+  background: var(--error-color);
+  @include defaultButton();
+
+  &:hover:not(:disabled) {
+    background: var(--error-color);
+
+    &:hover:not(:disabled) {
+      color: white;
+      background: transparent;
+
+      &::before {
+        background: var(--error-color);
+      }
+    }
   }
 }
 // SIZES
