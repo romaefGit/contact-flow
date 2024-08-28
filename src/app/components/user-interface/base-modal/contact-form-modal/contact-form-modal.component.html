@@ -17,8 +17,15 @@
         <app-input-text
           id="phone"
           title="Phone"
+          type="text"
           [control]="getAsFormControl('phone')"
         />
+        @if (typesList) {
+          <app-dropdown
+            [options]="typesList"
+            (action)="hearTypeSelected($event)"
+          />
+        }
 
         <app-input-text
           id="company"
@@ -29,7 +36,14 @@
         <app-input-text
           id="email"
           title="e-mail"
+          type="email"
           [control]="getAsFormControl('email')"
+        />
+
+        <app-input-text
+          id="notes"
+          title="notes"
+          [control]="getAsFormControl('notes')"
         />
         <div class="w-full">
           <app-button

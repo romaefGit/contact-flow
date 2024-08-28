@@ -1,6 +1,6 @@
 <div class="input--col">
   @if (title) {
-    <label [for]="'label-' + id" class="input--label">
+    <label [for]="'label-' + id" class="input--label mb-1">
       {{ title }}
       <span *ngIf="subtitle">{{ subtitle }}</span>
     </label>
@@ -12,36 +12,36 @@
     [autocomplete]="autocomplete"
     [formControl]="control"
     [value]="value"
-    [accept]="accept"
     [placeholder]="placeholder"
     [max]="max"
     [min]="min"
     [ngClass]="{
       'input__text--error':
-        control.invalid && (control.dirty || control.touched),
+        getErrors().length !== 0 &&
+        control.invalid &&
+        (control.dirty || control.touched),
     }"
     class="input__text"
   />
 
-  <div
-    *ngIf="
-      getErrors().length !== 0 &&
-      control.invalid &&
-      (control.dirty || control.touched)
-    "
-    class="mt-1"
-  >
-    <div class="">
-      @for (error of getErrors(); track error) {
-        <div class="flex">
-          <div>
-            <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
+  @if (
+    getErrors().length !== 0 &&
+    control.invalid &&
+    (control.dirty || control.touched)
+  ) {
+    <div class="mt-1">
+      <div class="">
+        @for (error of getErrors(); track error) {
+          <div class="flex">
+            <div>
+              <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
+            </div>
+            <div class="ml-2 text-sm error-message">
+              {{ errorMessages[error] ? errorMessages[error] : error }}
+            </div>
           </div>
-          <div class="ml-2">
-            {{ errorMessages[error] ?? error }}
-          </div>
-        </div>
-      }
+        }
+      </div>
     </div>
-  </div>
+  }
 </div>

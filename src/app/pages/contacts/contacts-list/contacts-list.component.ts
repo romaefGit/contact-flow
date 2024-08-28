@@ -1,4 +1,10 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { AsyncPipe } from '@angular/common';
@@ -6,6 +12,7 @@ import { RouterLink } from '@angular/router';
 import { SearchInputComponent } from '../../../components/form/search-input/search-input.component';
 import { ButtonComponent } from '../../../components/user-interface/button/button.component';
 import { ContactFormModalComponent } from '../../../components/user-interface/base-modal/contact-form-modal/contact-form-modal.component';
+import { Contacts } from '../../../core/models/contacts.model';
 
 @Component({
   selector: 'app-contacts-list',
@@ -28,12 +35,13 @@ export class ContactsListComponent {
   editContactModal!: ContactFormModalComponent;
 
   private readonly contactsService = inject(ContactsService);
-  $contacts: Observable<any> = this.contactsService.getContacts();
+  $contacts: Observable<Contacts> =
+    this.contactsService.getContactsObservable();
 
   constructor() {}
 
   ngOnInit(): void {
-    console.log('$contacts > ', this.$contacts);
+    this.contactsService.getContacts().subscribe();
   }
 
   openCreateModal() {

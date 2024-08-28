@@ -4,9 +4,10 @@
       <app-button
         class="w-full"
         theme="primary"
-        size="xs"
-        label="Add new contact"
+        size="sm"
+        label="New contact"
         iconName="fa-plus"
+        buttonClass="text-md"
         (click)="openCreateModal()"
       ></app-button>
     </div>
@@ -27,13 +28,13 @@
           <div class="table-row">
             <div class="table-cell name-cell highlighted">
               <div class="table-cell--content title-content">
-                {{ contact.first_name + contact.last_name }}
+                {{ contact.first_name + " " + contact.last_name }}
               </div>
             </div>
             <div class="table-cell">
               <div class="table-cell--heading">Phone</div>
               <div class="table-cell--content phone-content">
-                {{ contact.phone_number }}
+                {{ contact.phone }}
               </div>
             </div>
             <div class="table-cell">

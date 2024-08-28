@@ -3,7 +3,6 @@ $hover-color: #66c6cb;
 
 @mixin inputDefault($paddingX, $paddingY) {
   display: flex;
-  margin: 8px 0px;
   flex-grow: 1; /* Allow the input to take up as much space as possible */
   background: #eeeeee;
   color: #212121;
@@ -45,7 +44,6 @@ $hover-color: #66c6cb;
       background: $main-color;
       color: #ffffff;
       vertical-align: middle;
-      margin: 8px 0px;
       padding: 0px 16px;
       border: 0;
       outline: none;
@@ -62,12 +60,10 @@ $hover-color: #66c6cb;
 
   &__text {
     @include inputDefault(4px, 16px);
+    border-radius: 8px;
     &--error {
-      border: 1px red;
-      & ::placeholder {
-        color: red;
-        opacity: 1;
-      }
+      border: 1px var(--error-color) solid;
+      color: var(--error-color);
     }
   }
 }

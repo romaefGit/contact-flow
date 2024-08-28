@@ -5,183 +5,341 @@
       "first_name": "Jessica",
       "last_name": "Arvelaez",
       "company": "Endless",
-      "phone_number": 3246160178,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3246160178",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "jess@gmail.com",
-      "email_type": { "name": "Home" },
+      "email_type": {
+        "name": "Home"
+      },
       "significant_date": "27/06/1994",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "2",
       "first_name": "Michael",
       "last_name": "Smith",
       "company": "TechCorp",
-      "phone_number": 3284150729,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3284150729",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "michael.smith@techcorp.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "13/05/1987",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "3",
       "first_name": "Laura",
       "last_name": "Johnson",
       "company": "GreenWave",
-      "phone_number": 3146721987,
-      "phone_type": { "name": "Home" },
+      "phone": "3146721987",
+      "phone_type": {
+        "name": "Home"
+      },
       "email": "laura.j@gmail.com",
-      "email_type": { "name": "Home" },
+      "email_type": {
+        "name": "Home"
+      },
       "significant_date": "22/11/1992",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "4",
       "first_name": "Daniel",
       "last_name": "Lee",
       "company": "Innovatech",
-      "phone_number": 3129876543,
-      "phone_type": { "name": "Work" },
+      "phone": "3129876543",
+      "phone_type": {
+        "name": "Work"
+      },
       "email": "daniel.lee@innovatech.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "10/01/1990",
-      "date_type": { "name": "Anniversary" }
+      "date_type": {
+        "name": "Anniversary"
+      }
     },
     {
       "id": "5",
       "first_name": "Emily",
       "last_name": "Brown",
       "company": "SolarPower",
-      "phone_number": 3205678432,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3205678432",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "emily.b@solarpower.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "05/09/1985",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "6",
       "first_name": "John",
       "last_name": "Davis",
       "company": "BioMed",
-      "phone_number": 3154321765,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3154321765",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "john.d@biomed.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "15/02/1991",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "7",
       "first_name": "Sophia",
       "last_name": "Martinez",
       "company": "CreativeWorks",
-      "phone_number": 3168765432,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3168765432",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "sophia.m@gmail.com",
-      "email_type": { "name": "Home" },
+      "email_type": {
+        "name": "Home"
+      },
       "significant_date": "18/08/1993",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "8",
       "first_name": "David",
       "last_name": "Wilson",
       "company": "NextGen",
-      "phone_number": 3276543210,
-      "phone_type": { "name": "Work" },
+      "phone": "3276543210",
+      "phone_type": {
+        "name": "Work"
+      },
       "email": "david.w@nextgen.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "30/06/1989",
-      "date_type": { "name": "Anniversary" }
+      "date_type": {
+        "name": "Anniversary"
+      }
     },
     {
       "id": "9",
       "first_name": "Olivia",
       "last_name": "Taylor",
       "company": "EcoBuild",
-      "phone_number": 3198765432,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3198765432",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "olivia.t@gmail.com",
-      "email_type": { "name": "Home" },
+      "email_type": {
+        "name": "Home"
+      },
       "significant_date": "14/12/1995",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "10",
       "first_name": "James",
       "last_name": "Anderson",
       "company": "TechSolutions",
-      "phone_number": 3109876543,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3109876543",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "james.a@techsolutions.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "08/07/1984",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "11",
       "first_name": "Isabella",
       "last_name": "Moore",
       "company": "HealthFirst",
-      "phone_number": 3223456789,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3223456789",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "isabella.m@gmail.com",
-      "email_type": { "name": "Home" },
+      "email_type": {
+        "name": "Home"
+      },
       "significant_date": "25/03/1990",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "12",
       "first_name": "Ethan",
       "last_name": "Garcia",
       "company": "EduTech",
-      "phone_number": 3298765432,
-      "phone_type": { "name": "Work" },
+      "phone": "3298765432",
+      "phone_type": {
+        "name": "Work"
+      },
       "email": "ethan.g@edutech.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "02/02/1988",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
     },
     {
       "id": "13",
       "first_name": "Mia",
       "last_name": "Hernandez",
       "company": "GreenTech",
-      "phone_number": 3123456789,
-      "phone_type": { "name": "Mobile" },
+      "phone": "3123456789",
+      "phone_type": {
+        "name": "Mobile"
+      },
       "email": "mia.h@greentech.com",
-      "email_type": { "name": "Work" },
+      "email_type": {
+        "name": "Work"
+      },
       "significant_date": "09/10/1992",
-      "date_type": { "name": "Birthday" }
+      "date_type": {
+        "name": "Birthday"
+      }
+    },
+    {
+      "id": "e2a6",
+      "first_name": "roma",
+      "last_name": "asd",
+      "phone": "3246160156",
+      "company": "asd",
+      "email": "romaef23@gmail.com",
+      "notes": null
+    },
+    {
+      "id": "ec3rfNnxytEMp2qq",
+      "first_name": "otro",
+      "last_name": "asd",
+      "phone": "3246160156",
+      "company": "asd",
+      "email": "romaef23@gmail.com",
+      "notes": null
+    },
+    {
+      "id": "FeRuupTfjeZfctcj",
+      "first_name": "asd",
+      "last_name": "asd",
+      "phone": "3246160156",
+      "company": "asd",
+      "email": "asdasd@gmail.com",
+      "notes": null
+    },
+    {
+      "id": "hihL872wbV'Nzxzq",
+      "first_name": "asdasdasd",
+      "last_name": "asdasdasd",
+      "phone": "2131312312",
+      "company": "asdasd",
+      "email": "asdasdasdasda@gmail.com",
+      "notes": "dfsdf"
+    },
+    {
+      "id": "MxNxEF8t9UIprKib",
+      "first_name": "ROMA",
+      "last_name": "Adas",
+      "phone": "3246160156",
+      "company": "asd",
+      "email": "hey@gmail.com",
+      "notes": null
+    },
+    {
+      "id": "DfPbaq3BAAnJWe'k",
+      "first_name": "ultimo",
+      "last_name": "asdasd",
+      "phone": "213123123123",
+      "company": "asdasdasd",
+      "email": "hey@gmail.com",
+      "notes": "asdasd"
+    },
+    {
+      "id": "a2JCArtiXhbtXvyC",
+      "first_name": "este otro",
+      "last_name": "roma",
+      "phone": "1231212312",
+      "company": "asdasd asd",
+      "email": "roma@e.com",
+      "notes": "asd"
+    },
+    {
+      "id": "'G6DhUZ4gM9EKcpW",
+      "first_name": "uno ma",
+      "last_name": "sasd",
+      "phone": "3246160156",
+      "company": "roma",
+      "email": "romaef23-test@gmail.com",
+      "notes": "asd"
     }
   ],
   "types": [
     {
+      "id": "1359",
+      "name": "Personal"
+    },
+    {
+      "id": "6958",
       "name": "Home"
     },
     {
+      "id": "390d",
       "name": "Office"
     },
     {
+      "id": "2689",
       "name": "Work"
     },
     {
-      "name": "Main"
-    },
-    {
+      "id": "0f8f",
       "name": "Other"
     }
   ],
   "significantDates": [
     {
+      "id": "21cc",
       "name": "Birthday"
     },
     {
+      "id": "da80",
       "name": "Anniversary"
     },
     {
+      "id": "8e62",
       "name": "Other"
     }
   ]

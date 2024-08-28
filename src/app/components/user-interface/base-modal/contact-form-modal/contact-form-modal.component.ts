@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, inject } from '@angular/core';
 import { BaseModalComponent } from '../base-modal.component';
 import {
   FormBuilder,
@@ -9,6 +9,13 @@ import {
 } from '@angular/forms';
 import { InputTextComponent } from '../../../form/input-text/input-text.component';
 import { ButtonComponent } from '../../button/button.component';
+import { Observable } from 'rxjs';
+import { ContactsService } from '../../../../core/services/contacts/contacts.service';
+import { Contacts } from '../../../../core/models/contacts.model';
+import { DropdownComponent } from '../../../form/dropdown/dropdown.component';
+import { TypesService } from '../../../../core/services/types/types.service';
+import { Type, Types } from '../../../../core/models/types.model';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-contact-form-modal',
@@ -18,6 +25,8 @@ import { ButtonComponent } from '../../button/button.component';
     InputTextComponent,
     ReactiveFormsModule,
     ButtonComponent,
+    DropdownComponent,
+    AsyncPipe,
   ],
   templateUrl: './contact-form-modal.component.html',
   styleUrl: './contact-form-modal.component.scss',
@@ -26,48 +35,81 @@ export class ContactFormModalComponent implements OnInit {
   @ViewChild('dialog') dialog!: BaseModalComponent;
   @Input() type: 'create' | 'update' = 'update';
 
-  private fb: FormBuilder = new FormBuilder();
+  contactForm!: FormGroup;
 
-  contactForm: FormGroup = this.fb.group({
-    first_name: ['', [Validators.required]],
-    last_name: ['', Validators.required],
-    phone: ['', Validators.required],
-    company: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-  });
+  private fb: FormBuilder = inject(FormBuilder);
+
+  private readonly contactsService = inject(ContactsService);
+  private readonly typesService = inject(TypesService);
+  typesList: Types = [];
 
   submitting: boolean = false;
-
   initForm: boolean = false;
+  serverErrorMessage: string = '';
+
+  phonePattern = /^\+?\d{10,15}$/; // Accepts '+573214567896' or '3214567896'
+  wordPattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // words only
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.typesService.getTypes().subscribe({
+      next: (types) => {
+        console.log('types > ', types);
+
+        this.typesList = types;
+      },
+    });
+    this.contactForm = this.fb.group({
+      first_name: [
+        '',
+        [Validators.required, Validators.pattern(this.wordPattern)],
+      ],
+      last_name: ['', Validators.pattern(this.wordPattern)],
+      phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
+      phone_type: [''],
+      company: ['', Validators.pattern(this.wordPattern)],
+      email: ['', [Validators.email]],
+      notes: ['', Validators.pattern(this.wordPattern)],
+    });
+
     this.initForm = true;
   }
 
   openDialog() {
+    this.submitting = false;
     this.contactForm.reset();
     this.dialog.openDialog();
-    this.submitting = false;
   }
 
   closeDialog() {
-    // this.contactForm.emit({
-    //   close: true,
-    //   submit: false,
-    // });
+    this.submitting = false;
     this.contactForm.reset();
     this.dialog.closeDialog();
-    this.submitting = false;
   }
 
   submitForm() {
-    this.contactForm.invalid;
-    this.submitting = true;
-    if (this.submitting && this.contactForm.invalid) return;
+    this.markAllControlsAsTouched(this.contactForm);
     const dataToSave = this.contactForm.value;
-    console.log('dataToSave > ', dataToSave);
+    console.log('this.contactForm.invalid > ', this.contactForm.invalid);
+    if (!this.contactForm.invalid) {
+      console.log('dataToSave > ', dataToSave);
+      this.contactsService.saveContact(dataToSave).subscribe({
+        next: (res) => {
+          console.log('res > ', res);
+        },
+        error: (err) => {
+          this.serverErrorMessage = err;
+          console.log('err > ', err);
+        },
+        complete: () => {
+          this.submitting = false;
+        },
+      });
+      this.contactsService.getContactsObservable();
+    }
+  }
+
+  hearTypeSelected(option: Type) {
+    console.log('option > ', option);
   }
 
   /**
@@ -97,6 +139,7 @@ export class ContactFormModalComponent implements OnInit {
     }
     return true;
   }
+
   isValidDate(date: Date): boolean {
     const today = new Date();
     const maxAgeDate = new Date(
@@ -105,5 +148,16 @@ export class ContactFormModalComponent implements OnInit {
       today.getDate(),
     );
     return date <= maxAgeDate;
+  }
+
+  markAllControlsAsTouched(group: FormGroup) {
+    Object.keys(group.controls).forEach((controlName) => {
+      const control = group.get(controlName);
+      if (control instanceof FormGroup) {
+        this.markAllControlsAsTouched(control);
+      } else {
+        control?.markAsTouched();
+      }
+    });
   }
 }

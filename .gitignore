@@ -1,4 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+# other
+/_material
+/.vscode
+_material
+.vscode
 
 # Compiled output
 /dist
@@ -37,10 +42,14 @@ yarn-error.log
 testem.log
 /typings
 
-/_material
-!.frebase
-!.vscode
-
 # System files
 .DS_Store
 Thumbs.db
+*.gif
+
+
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

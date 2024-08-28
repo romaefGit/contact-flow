@@ -11,7 +11,6 @@ $--hover-color: #66c6cb;
 }
 
 @mixin defaultButton() {
-  width: 150px;
   border: transparent;
   cursor: pointer;
   display: flex;
@@ -134,10 +133,13 @@ $--hover-color: #66c6cb;
 }
 .sm {
   @include setSize(16px, 16px);
+  font-weight: bold;
 }
 .md {
   @include setSize(24px, 24px);
+  font-weight: bold;
 }
 .lg {
   @include setSize(32px, 32px);
+  font-weight: bold;
 }

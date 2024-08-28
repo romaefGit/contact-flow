@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ButtonComponent {
   @Input({ required: true }) label = 'Button';
-  @Input() customWidth = '150px';
+  @Input() customWidth = '';
   @Input() buttonClass = '';
   @Input() icon = '';
   @Input() iconColor = '#fff';

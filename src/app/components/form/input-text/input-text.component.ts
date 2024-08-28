@@ -35,27 +35,13 @@ export class InputTextComponent {
   @Input() control: FormControl = new FormControl();
 
   @Input() autocomplete = 'off';
-  @Input() accept = '';
   @Input() subtitle?: string;
   @Input() value?: string;
-  @Input() titleClass?: string;
   @Input() placeholder = '';
   @Input() disabled = false;
-  @Input() inputClass = '';
-  @Input() errorClass: string = '';
 
   @Input() max: any;
   @Input() min: any;
-
-  errorClasses = 'border border-semantic-100';
-
-  initClasses = () => {};
-
-  addErrorClasses = () => {};
-
-  ngOnInit() {
-    this.initClasses();
-  }
 
   getErrors(): string[] {
     if (!this.control || !this.control.errors) {
@@ -78,6 +64,20 @@ export class InputTextComponent {
       this.errorMessages = {
         ...this.errorMessages,
         maxlength: `This field can't have over ${requiredLength} characters`,
+      };
+    }
+
+    if (this.control?.getError('email')) {
+      this.errorMessages = {
+        ...this.errorMessages,
+        email: `You need to set a valid email`,
+      };
+    }
+
+    if (this.control?.getError('pattern')) {
+      this.errorMessages = {
+        ...this.errorMessages,
+        pattern: `The input format is invalid.`,
       };
     }
 
