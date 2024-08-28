@@ -1,10 +1,51 @@
-# ContactCrud
+# Contact Crud Roma
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. The application allows you to manage contacts by adding, editing, and deleting them. Each contact can store multiple phone numbers along with other details like personal email and notes.
 
-## Development server
+- It use SCSS and BEM Metodology for resusable components and easy to edit, I didn't use any Framework of css to show my skills without them.
+- It use components with standalone, there are no modules as Angular 17 update.
+- It use lazy loading for routes.
+- It use RXJS for services and components communication.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Special thanks go to:
+
+- [Romario Estrada](https://romaefportfolio.web.app/) for his nice develop.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Run app](#run-app)
+- [Run server](#run-server)
+- [Code scaffolding](#code-scaffolding)
+
+## Installation
+
+Clone the repo:
+
+- `git clone https://github.com/RomarioAugustoEstradaFlorez/geoAngular8`
+
+Execute `npm install` this on the root of the project using Node 18.
+
+## Run App
+
+Run `ng serve` or `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Run Server
+
+Run `npm run server` for a dev server. Navigate to `http://localhost:3000/`. You will be able to see the services `contacts` and `types`
+
+```bash
+Endpoints:
+
+http://localhost:3000/contacts
+http://localhost:3000/types
+```
+
+## Work in progress
+
+You can see the demo as a work in progress, the server json doesn't work, so you could not add anything by now:
+
+- [contact-crud-roma](https://github.com/romaefGit/contact-flow.git) and if you liked, give me a star on the [Respository](https://github.com/romaefGit/contact-flow.git)
 
 ## Code scaffolding
 
@@ -25,3 +66,14 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Browser Support
+
+At present, we officially aim to support the last two versions of the following browsers:
+
+| Chrome | Firefox | Edge | Opera |
+| ------ | ------- | ---- | ----- |
+
+## Licensing
+
+Licensed under [MIT](https://choosealicense.com/licenses/mit/)
