@@ -1,5 +1,5 @@
 @mixin generate-space-classes($alias, $property) {
-  @for $i from 1 through 10 {
+  @for $i from 0 through 10 {
     .#{$alias}-#{$i} {
       #{$property}: #{$i * 4px};
     }

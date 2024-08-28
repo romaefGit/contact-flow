@@ -51,6 +51,7 @@ export class BaseModalComponent {
   @Input() showCloseButton = true;
   @Input() titleModal = '';
   @Input() bgPersonalized = '';
+  @Output() isOpened = new EventEmitter<any>();
   @Output() isClosed = new EventEmitter<any>();
 
   /**Passes as reference
@@ -101,6 +102,7 @@ export class BaseModalComponent {
   openDialog() {
     this.dialog.nativeElement.showModal();
     this.isOpen = true;
+    this.isOpened.emit();
   }
 
   closeDialog() {

@@ -11,11 +11,12 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { InfoMessageComponent } from '../../user-interface/info-message/info-message.component';
 
 @Component({
   selector: 'app-input-text',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, InfoMessageComponent],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss',
   providers: [
@@ -54,6 +55,7 @@ export class InputTextComponent {
 
   getErrors(): string[] {
     if (!this.control || !this.control.errors) {
+      this.errorOutMessage.emit(null);
       return [];
     }
 
@@ -96,12 +98,7 @@ export class InputTextComponent {
     };
 
     if (this.sentErrorOutside && this.control.errors) {
-      console.log('this.control.errors > ', this.control.errors);
-
       this.errorOutMessage.emit(this.errorMessages);
-    }
-    if (this.sentErrorOutside && !this.control.errors) {
-      this.errorOutMessage.emit(null);
     }
 
     return Object.keys(this.control.errors);

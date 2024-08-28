@@ -23,7 +23,7 @@ export class DropdownComponent implements OnChanges, AfterViewInit {
   selectedOption: any;
 
   @Input({ required: true }) options: Type[] = [];
-  @Output() action = new EventEmitter<any>();
+  @Output() selected = new EventEmitter<any>();
 
   ngAfterViewInit(): void {
     // Initial selection after view initialization
@@ -43,7 +43,7 @@ export class DropdownComponent implements OnChanges, AfterViewInit {
 
   selectOption(option: Type) {
     this.selectedOption = option;
-    this.action.emit(option);
+    this.selected.emit(option);
     this.isDropdownOpen = false;
   }
 

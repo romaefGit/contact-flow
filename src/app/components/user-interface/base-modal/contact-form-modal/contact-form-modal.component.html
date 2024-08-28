@@ -1,5 +1,9 @@
-<app-base-modal #dialog titleModal="Create new contact">
-  @if (initForm) {
+<app-base-modal
+  #dialog
+  titleModal="Create new contact"
+  (isOpened)="dialogOpened = true"
+>
+  @if (initForm && dialogOpened) {
     <form id="contact-form" [formGroup]="contactForm">
       <div class="contact">
         <app-input-text
@@ -16,64 +20,73 @@
 
         <div formArrayName="phones">
           @for (phone of phones.controls; track $index) {
-            <div class="phones" [formGroupName]="$index">
-              <div class="phones--col">
-                <app-input-text
-                  id="phone"
-                  title="Phone"
-                  type="text"
-                  [sentErrorOutside]="true"
-                  (errorOutMessage)="
-                    receiveErrorMessage({ index: $index, message: $event })
-                  "
-                  [control]="getPhoneControl($index, 'phone')"
-                />
-              </div>
-              @if (typesList) {
-                <div class="phones--col dropdown">
-                  <app-dropdown
-                    [options]="typesList"
-                    (action)="hearTypeSelected($event)"
+            <div class="w-full item">
+              <div class="phones" [formGroupName]="$index">
+                <div class="phones--col">
+                  <app-input-text
+                    id="phone"
+                    title="Phone"
+                    type="text"
+                    [sentErrorOutside]="true"
+                    (errorOutMessage)="
+                      receiveErrorMessage({ index: $index, message: $event })
+                    "
+                    [control]="getPhoneControl($index, 'phone')"
                   />
                 </div>
-              }
-              <div class="phones--col remove">
-                <a (click)="removePhone($index)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </a>
+                @if (typesList) {
+                  <div class="phones--col dropdown">
+                    <app-dropdown
+                      [options]="typesList"
+                      (selected)="setSelectedTypePhone($event, $index)"
+                    />
+                  </div>
+                }
+                <div class="phones--col remove">
+                  <a (click)="removePhone($index)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </a>
+                </div>
               </div>
-            </div>
-            <!-- Error message display -->
-            @if (getPhoneError($index)) {
-              <div class="w-full">
-                <div class="mt-1">
-                  <div *ngFor="let item of phoneErrorMessages | keyvalue">
-                    <div class="flex">
-                      <div>
-                        <i
-                          class="fa fa-exclamation-circle error"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                      <div class="ml-2 text-sm error-message">
-                        {{ item.value }}
-                      </div>
+              <!-- Error message display -->
+              @if (!this.phoneErrors[$index]?.solved) {
+                <div class="w-full">
+                  <div class="mt-1">
+                    <div
+                      *ngFor="let item of this.phoneErrors[$index] | keyvalue"
+                    >
+                      <app-info-message
+                        iconName="fa-exclamation-circle"
+                        iconClass="error"
+                        [message]="item.value"
+                      />
                     </div>
                   </div>
                 </div>
-              </div>
-            }
+              }
+            </div>
           }
           <app-button
             (click)="addPhone()"
             theme="primary"
             size="sm"
-            label="Add Phone"
+            [label]="
+              phones.controls.length == 0 ? 'Add phone' : 'Add another phone'
+            "
             iconName="fa-plus"
             iconPosition="left"
             customWidth="100%"
             buttonClass="mt-4"
           />
+          @if (contactForm.get("phones")?.errors?.["noPhone"]) {
+            <div class="w-full pt-3">
+              <app-info-message
+                iconName="fa-exclamation-circle"
+                iconClass="error"
+                message="You should add at least one phone number."
+              />
+            </div>
+          }
         </div>
 
         <app-input-text

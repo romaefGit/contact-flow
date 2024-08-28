@@ -33,14 +33,11 @@
     <div class="mt-1">
       <div class="">
         @for (error of getErrors(); track error) {
-          <div class="flex">
-            <div>
-              <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
-            </div>
-            <div class="ml-2 text-sm error-message">
-              {{ errorMessages[error] ? errorMessages[error] : error }}
-            </div>
-          </div>
+          <app-info-message
+            iconName="fa-exclamation-circle"
+            iconClass="error"
+            [message]="errorMessages[error] ? errorMessages[error] : error"
+          />
         }
       </div>
     </div>

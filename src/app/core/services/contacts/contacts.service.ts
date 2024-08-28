@@ -1,27 +1,30 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map, tap, throwError } from 'rxjs';
-import { Contact, Contacts } from '../../models/contacts.model';
+import { Contact, Contacts, Phone } from '../../models/contacts.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactsService {
   private contacts: Contacts = [];
-  private contactsSubject = new BehaviorSubject<Contacts>([]);
+  // private contactsSubject = new BehaviorSubject<Contacts>([]);
+  private contactsSubject = new BehaviorSubject<Contacts>(this.contacts);
 
   private _http = inject(HttpClient);
 
   constructor() {}
 
-  getContacts(): Observable<any> {
-    return this._http.get('http://localhost:3000/contacts').pipe(
-      map((res: any) => {
+  // Fetch contacts from the server and filter out duplicates
+  getContacts(): Observable<void> {
+    return this._http.get<Contact[]>('http://localhost:3000/contacts').pipe(
+      map((res: Contact[]) => {
         // Filter out duplicates
         const newContacts = res.filter(
-          (newContact: any) =>
+          (newContact: Contact) =>
             !this.contacts.some(
-              (existingContact: any) => existingContact.id === newContact.id,
+              (existingContact: Contact) =>
+                existingContact.id === newContact.id,
             ),
         );
 
@@ -34,7 +37,8 @@ export class ContactsService {
     );
   }
 
-  getContactsObservable(): Observable<Contacts> {
+  // Get an observable of the contacts
+  getContactsObservable(): Observable<Contact[]> {
     return this.contactsSubject.asObservable();
   }
 
@@ -53,12 +57,16 @@ export class ContactsService {
   //   return this._http.post(`http://localhost:3000/contacts/`, contactData);
   // }
   saveContact(contact: Contact): Observable<any> {
-    // Check if contact with the same phone number or email already exists
-    const existingContactPhone = this.contacts.find(
-      (existing: Contact) =>
-        existing.phone === contact.phone || existing.email === contact.email,
-    );
+    // Check if any of the contact's phone numbers already exist in the contacts array
+    const existingContactPhone = this.contacts.find((existing: Contact) => {
+      return existing.phones.some((existingPhone: Phone) =>
+        contact.phones.some(
+          (newPhone: Phone) => newPhone.phone === existingPhone.phone,
+        ),
+      );
+    });
 
+    // Check if the contact's email already exists in the contacts array
     const existingContactEmail = this.contacts.find(
       (existing: Contact) => existing.email === contact.email,
     );

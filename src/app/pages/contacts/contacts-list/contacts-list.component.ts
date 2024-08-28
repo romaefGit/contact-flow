@@ -5,7 +5,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -38,10 +38,50 @@ export class ContactsListComponent {
   $contacts: Observable<Contacts> =
     this.contactsService.getContactsObservable();
 
+  $filteredContacts: Observable<Contacts> = of([]); // Observable for the filtered contacts
+  searchTerm: string = '';
+
   constructor() {}
 
   ngOnInit(): void {
     this.contactsService.getContacts().subscribe();
+    this.contactsService.getContacts().subscribe(() => {
+      this.updateFilteredContacts();
+    });
+  }
+
+  private updateFilteredContacts() {
+    console.log('this.searchTerm > ');
+
+    this.$filteredContacts = this.contactsService
+      .getContactsObservable()
+      .pipe(map((contacts) => this.filterContacts(contacts)));
+  }
+
+  private filterContacts(contacts: Contacts): Contacts {
+    if (!this.searchTerm) {
+      return contacts;
+    }
+
+    const query = this.searchTerm.toLowerCase();
+    console.log('query > ', query);
+
+    return contacts.filter((contact) => {
+      return (
+        contact.first_name.toLowerCase().includes(query) ||
+        (contact.last_name &&
+          contact.last_name.toLowerCase().includes(query)) ||
+        (contact.email && contact.email.toLowerCase().includes(query)) ||
+        contact.phones.some((phone) =>
+          phone.phone.toLowerCase().includes(query),
+        )
+      );
+    });
+  }
+
+  onSearchTermChange(term: string) {
+    this.searchTerm = term;
+    this.updateFilteredContacts();
   }
 
   openCreateModal() {

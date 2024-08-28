@@ -4,10 +4,19 @@
   padding: 0px 24px;
   padding-bottom: 16px;
 }
+.item {
+  border-bottom: 1px solid var(--main-color);
+  padding: 6px 0;
+  padding-bottom: 8px;
+}
 .phones {
+  margin: 16px 0;
+  border-right: 0;
+  border-left: 0;
   display: flex;
   align-items: center; /* Vertically centers the items */
   gap: 8px; /* Space between items, adjust as needed */
+
   &--col {
     flex: 1; /* Allows columns to grow and shrink as needed */
   }
