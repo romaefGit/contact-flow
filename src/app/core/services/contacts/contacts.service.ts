@@ -44,7 +44,7 @@ export class ContactsService {
   }
 
   getContactById(id: string): Observable<any> {
-    return this._http.get(`http://localhost:3000/contacts/${id}`);
+    return this._http.get(`${environment.api}/contacts/${id}`);
   }
 
   saveContact(contact: Contact): Observable<any> {
@@ -82,7 +82,7 @@ export class ContactsService {
     this.contacts.push(contactData);
     this.contactsSubject.next(this.contacts);
 
-    return this._http.post(`http://localhost:3000/contacts/`, contactData);
+    return this._http.post(`${environment.api}/contacts`, contactData);
   }
 
   // Methods
