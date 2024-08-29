@@ -44,6 +44,27 @@
 ); // Generates .pr-1 to .pr-10
 @include generate-space-classes("p", "padding"); // Generates .m-1 to .m-10
 
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.block {
+  display: block;
+}
+.flex {
+  display: flex;
+}
+.w-full {
+  width: 100%;
+}
+
+.right {
+  position: absolute;
+  right: 0px;
+}
+
 .text-xs {
   font-size: 8px !important;
 }

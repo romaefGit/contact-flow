@@ -16,7 +16,7 @@ import {
 import { Subscription } from 'rxjs';
 import { ClickListenerService } from '../../../app.component';
 import { CommonModule } from '@angular/common';
-const timeAnimation = 200; //  milliseconds
+const timeAnimation = 300; //  milliseconds
 @Component({
   selector: 'app-base-modal',
   standalone: true,
@@ -29,6 +29,7 @@ const timeAnimation = 200; //  milliseconds
         'open',
         style({
           opacity: 1,
+          transform: 'scale(1)',
           top: -16,
         }),
       ),
@@ -37,16 +38,34 @@ const timeAnimation = 200; //  milliseconds
         style({
           opacity: 0,
           top: 0,
+          transform: 'scale(0.6)',
         }),
       ),
-      transition('open => closed', [animate(timeAnimation + 'ms')]),
-      transition('closed => open', [animate(timeAnimation + 'ms')]),
+      transition('open => closed', [
+        animate(
+          '0.4s ease-in-out',
+          style({
+            opacity: 0,
+            transform: 'scale(0.6)',
+          }),
+        ),
+      ]),
+      transition('closed => open', [
+        animate(
+          '0.3s ease-in-out',
+          style({
+            opacity: 1,
+            transform: 'scale(1)',
+          }),
+        ),
+      ]),
     ]),
   ],
 })
 export class BaseModalComponent {
   @Input() header = '';
   @Input() styled = true;
+  @Input() maxWidth!: string;
 
   @Input() showCloseButton = true;
   @Input() titleModal = '';

@@ -1,0 +1,10 @@
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px; /* Creates the space between the buttons */
+  width: 100%; /* Ensure the buttons occupy the full row */
+}
+
+app-button {
+  flex: 1; /* Makes each button take up equal space */
+}

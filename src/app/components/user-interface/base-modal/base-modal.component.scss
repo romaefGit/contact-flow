@@ -27,6 +27,7 @@
       text-align: center;
       margin: 0;
       margin-bottom: 16px;
+      padding: 0px 32px;
     }
     &--close {
       cursor: pointer;
@@ -47,11 +48,11 @@
 }
 
 .info-message-type {
+  top: 8px !important;
   background: transparent;
   border: none;
   padding: 0;
   position: absolute;
-  top: 3px;
   margin: 0 auto;
   position: absolute;
 }

@@ -11,14 +11,17 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
-// import { ErrorResponseInterceptor } from './shared/error-response.interceptor';
+import { ErrorResponseInterceptor } from './core/interceptors/error-response.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 // https://webcode.tools/css-generator/keyframe-animation
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
     provideHttpClient(
-      withFetch()
-      // withInterceptors([ErrorResponseInterceptor])
+      withFetch(),
+      withInterceptors([ErrorResponseInterceptor]),
     ),
+    provideAnimations(),
   ],
 };

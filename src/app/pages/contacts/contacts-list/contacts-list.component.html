@@ -85,7 +85,7 @@
                   iconName="fa-trash"
                   iconPosition="center"
                   iconClass="text-lg pl-1 pr-1"
-                  (click)="deleteContact(contact)"
+                  (click)="openConfirmationModal(contact)"
                 />
               </div>
             </div>
@@ -109,6 +109,15 @@
     [type]="serverMessage.type"
     [message]="serverMessage.message"
   ></app-message-modal>
+
+  <app-confirm-modal
+    #deleteModal
+    header="Do you want to remove this contact?"
+    description="If you delete this contact you will not se it again."
+    acceptText="Delete"
+    cancelText="Cancel"
+    (onConfirm)="deleteContact()"
+  />
 } @placeholder {
   <p>placeholder</p>
 } @loading {

@@ -1,0 +1,38 @@
+<app-base-modal
+  [showCloseButton]="showCloseButton"
+  [titleModal]="header"
+  maxWidth="340px"
+  #dialog
+>
+  <div class="w-full">
+    <p class="text-md">
+      {{ description }}
+    </p>
+    @if (errorMessage) {
+      <p class="text-md error">{{ errorMessage }}</p>
+    }
+
+    <div class="button-row">
+      <app-button
+        label="{{ acceptText }}"
+        [class]="acceptButton.class"
+        [buttonClass]="cancelButton.buttonClass"
+        [theme]="acceptButton.theme"
+        [size]="acceptButton.size"
+        (click)="onAccept()"
+      >
+        {{ acceptText }}
+      </app-button>
+
+      <app-button
+        label="{{ cancelText }}"
+        [class]="cancelButton.class"
+        [theme]="cancelButton.theme"
+        [size]="cancelButton.size"
+        [buttonClass]="cancelButton.buttonClass"
+        (click)="closeDialog()"
+      >
+      </app-button>
+    </div>
+  </div>
+</app-base-modal>

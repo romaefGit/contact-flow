@@ -7,27 +7,18 @@ $error-text: #b83c37;
 $success: #ddf3d5;
 $success-text: #597151;
 
-.message-box {
-  width: 440px;
-  border-radius: 6px;
-  margin: 15px 22px;
+.message {
+  display: flex;
+  align-items: center; // Center the icon and text vertically if needed
+  border-radius: 8px;
 
-  padding: auto 0;
-  position: relative;
-  i {
-    vertical-align: middle;
-    padding: 20px;
-    &.exit-button {
-      float: right;
-      opacity: 0.4;
-      &:hover {
-        opacity: 0.8;
-      }
-    }
+  &--text {
+    display: flex;
+    align-items: center;
+    gap: 16px; // Gap between the icon and the text
+    margin: 16px;
+    margin-right: 20px;
   }
-}
-.message-text {
-  vertical-align: middle;
 }
 .message-box-info {
   background-color: $info;

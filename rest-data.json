@@ -5,7 +5,7 @@
       "last_name": "Johnson",
       "company": "GreenWave",
       "email": "laura.j@gmail.com",
-      "notes": "asdasdasd olo a a a asd",
+      "notes": "asdasdasd olo ",
       "id": "G6DhUZ4gM9EKcpW",
       "phones": [
         {
@@ -46,7 +46,7 @@
       "last_name": "new",
       "company": "Some",
       "email": "epa@larepa.com",
-      "notes": "asdassa ",
+      "notes": "asdassa  asd",
       "id": "G6GaIRedZ4UwvkA6",
       "phones": [
         {
@@ -73,26 +73,12 @@
       ]
     },
     {
-      "id": "Ibe4YUPipHmrH6Ni",
       "first_name": "asdasd",
       "last_name": "asdasd",
-      "phones": [
-        {
-          "phone": "12222222111",
-          "phone_type": {
-            "id": "390d",
-            "name": "Office"
-          }
-        }
-      ],
-      "company": "asd",
-      "email": null,
-      "notes": "qwewq"
-    },
-    {
+      "company": "asdasd",
+      "email": "asd@re.com",
+      "notes": "asdasd",
       "id": "d286",
-      "first_name": "asdasd",
-      "last_name": "asdasd",
       "phones": [
         {
           "phone": "12312312312",
@@ -101,17 +87,14 @@
             "name": "Personal"
           }
         }
-      ],
-      "company": "asdasd",
-      "email": "asd@re.com",
-      "notes": "asdasd"
+      ]
     },
     {
       "first_name": "Roma",
       "last_name": "hey",
       "company": "wqeqwe",
       "email": "romaa@re.com",
-      "notes": "asdasd",
+      "notes": "asdasd asd",
       "id": "EvaeJJvqR3qNFUT3",
       "phones": [
         {

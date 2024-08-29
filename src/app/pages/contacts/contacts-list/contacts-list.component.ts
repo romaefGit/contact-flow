@@ -16,6 +16,7 @@ import { Contact, Contacts } from '../../../core/models/contacts.model';
 import { EditContactFormComponent } from '../../../components/user-interface/base-modal/edit-contact-form/edit-contact-form.component';
 import { ContactActiveService } from '../../../core/services/contact-active/contact-active.service';
 import { MessageModalComponent } from '../../../components/user-interface/base-modal/message-modal/message-modal.component';
+import { ConfirmModalComponent } from '../../../components/user-interface/base-modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-contacts-list',
@@ -29,6 +30,7 @@ import { MessageModalComponent } from '../../../components/user-interface/base-m
     EditContactFormComponent,
     NgClass,
     MessageModalComponent,
+    ConfirmModalComponent,
   ],
   templateUrl: './contacts-list.component.html',
   styleUrl: './contacts-list.component.scss',
@@ -39,6 +41,9 @@ export class ContactsListComponent {
 
   @ViewChild('editContactModal')
   editContactModal!: ContactFormModalComponent;
+
+  @ViewChild('deleteModal')
+  deleteModal!: ConfirmModalComponent;
 
   @ViewChild('messageModal') messageModal!: MessageModalComponent;
 
@@ -57,6 +62,8 @@ export class ContactsListComponent {
     type: 'success',
     message: '',
   };
+
+  deleteContactId!: string;
 
   constructor() {}
 
@@ -113,8 +120,13 @@ export class ContactsListComponent {
     }, 0);
   }
 
-  deleteContact(contact: any) {
-    this.contactsService.deleteContact(contact.id).subscribe({
+  openConfirmationModal(contact: any) {
+    this.deleteContactId = contact?.id;
+    this.deleteModal.openDialog();
+  }
+
+  deleteContact() {
+    this.contactsService.deleteContact(this.deleteContactId).subscribe({
       next: (res) => {
         this.serverMessage.message = 'The contact was removed successfully';
         this.messageModal.openDialog();
