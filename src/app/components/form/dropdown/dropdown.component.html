@@ -1,18 +1,20 @@
-<div class="dropdown">
-  <div class="dropdown__select" (click)="toggleDropdown()">
-    <span class="dropdown__selected">{{ selectedOption?.name }}</span>
-    <div class="caret" [ngClass]="{ 'caret-rotate': isDropdownOpen }"></div>
+@if (options) {
+  <div class="dropdown">
+    <div class="dropdown__select" (click)="toggleDropdown()">
+      <span class="dropdown__selected">{{ selectedOption?.name }}</span>
+      <div class="caret" [ngClass]="{ 'caret-rotate': isDropdownOpen }"></div>
+    </div>
+    <ul class="dropdown__menu" [ngClass]="{ 'menu-open': isDropdownOpen }">
+      @for (option of options; track $index) {
+        <li
+          (click)="selectOption(option)"
+          [ngClass]="{
+            active: selectedOption ? option?.id === selectedOption?.id : false,
+          }"
+        >
+          {{ option?.name }}
+        </li>
+      }
+    </ul>
   </div>
-  <ul class="dropdown__menu" [ngClass]="{ 'menu-open': isDropdownOpen }">
-    @for (option of options; track $index) {
-      <li
-        (click)="selectOption(option)"
-        [ngClass]="{
-          active: selectedOption ? option?.id === selectedOption?.id : false,
-        }"
-      >
-        {{ option?.name }}
-      </li>
-    }
-  </ul>
-</div>
+}

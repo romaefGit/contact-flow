@@ -23,17 +23,22 @@ export class DropdownComponent implements OnChanges, AfterViewInit {
   selectedOption: any;
 
   @Input({ required: true }) options: Type[] = [];
+  @Input() autoSelectOption!: Type;
   @Output() selected = new EventEmitter<any>();
 
   ngAfterViewInit(): void {
     // Initial selection after view initialization
     this.selectFirstOptionIfAvailable();
+    if (this.autoSelectOption && this.options)
+      this.autoSelect(this.autoSelectOption);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['options']) {
       // Handle the case where options are populated or updated
       this.selectFirstOptionIfAvailable();
+      if (this.autoSelectOption && this.options)
+        this.autoSelect(this.autoSelectOption);
     }
   }
 
@@ -44,6 +49,14 @@ export class DropdownComponent implements OnChanges, AfterViewInit {
   selectOption(option: Type) {
     this.selectedOption = option;
     this.selected.emit(option);
+    this.isDropdownOpen = false;
+  }
+
+  autoSelect(option: Type) {
+    let indexArrayOption = this.options.findIndex((opt) => opt.id == option.id);
+    if (indexArrayOption !== -1) {
+      this.selectedOption = this.options[indexArrayOption];
+    }
     this.isDropdownOpen = false;
   }
 

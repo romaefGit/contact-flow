@@ -26,19 +26,19 @@
         {
           "first_name": "Angye",
           "last_name": "Estrada",
-          "company": "Callcenter",
-          "email": "angye@re.com",
-          "notes": "Cuidadosa",
-          "id": "JkmM24brtIddzPez4hCt7uRLGtLqN7iz",
           "phones": [
             {
-              "phone": "3245678932",
+              "phone": "22323222333",
               "phone_type": {
-                "id": "1359",
-                "name": "Personal"
+                "id": "2689",
+                "name": "Work"
               }
             }
-          ]
+          ],
+          "company": "Callcenter",
+          "email": "angye@re.com",
+          "notes": "Cuidadosa hy e",
+          "id": "JkmM24brtIddzPez4hCt7uRLGtLqN7iz"
         },
         {
           "first_name": "Fernanda",
