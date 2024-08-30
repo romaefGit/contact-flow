@@ -9,10 +9,10 @@ import {
   merge,
   Subject,
 } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { Contact, Contacts, Phone } from '../../models/contacts.model';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Contact, Contacts } from '../../models/contacts.model';
 import { environment } from '../../../../environments/environment';
-import { User, UserImpl } from '../../models/user.model';
+import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,7 @@ import { User, UserImpl } from '../../models/user.model';
 export class ContactsService {
   private users: User[] = [];
   private contacts: Contacts = [];
+
   private usersSubject = new BehaviorSubject<User[]>(this.users);
   private contactsSubject = new BehaviorSubject<Contacts>(this.contacts);
 
@@ -41,46 +42,59 @@ export class ContactsService {
               ),
           ),
         ),
+        tap((contacts: Contact[]) => {
+          this.contactsSubject.next(contacts);
+        }),
       );
+  }
+
+  getContactsObservable() {
+    return this.contactsSubject.asObservable();
   }
 
   // Save a contact to a user
   saveContact(contact: Contact): Observable<any> {
-    const user = this.getSession().user;
-
-    if (!user) {
-      return throwError(() => new Error('User not found'));
-    }
-    // If no duplicate is found, proceed to save the contact
-    let contactData = { ...contact };
-
-    if (user?.contacts) {
-      user?.contacts.push(contactData);
-    } else {
-      user.contacts?.push(contactData);
-    }
-    console.log('user > ', user);
-
     return this._http
-      .put(`${environment.api}/users/${this.getSession().user.id}`, user)
+      .get(`${environment.api}/users/${this.getSession().user.id}`)
       .pipe(
-        tap(() => {
-          // Update local state
-          this.usersSubject.next(this.users);
+        switchMap((user: any) => {
+          if (!user) {
+            return throwError(() => new Error('User not found'));
+          }
+
+          // Generate a unique ID and clone the contact object
+          contact.id = this.generateUniqueCode(32);
+          let contactData = { ...contact };
+
+          // Ensure that the user's contacts array is initialized
+          if (user.contacts) {
+            user.contacts.push(contactData);
+          } else {
+            user.contacts = [contactData];
+          }
+
+          console.log('user > ', user);
+
+          // Execute the PUT request to update the user
+          return this._http
+            .put(`${environment.api}/users/${user.id}`, user)
+            .pipe(
+              tap((updatedUser: any) => {
+                // Update local state
+                this.contactsSubject.next(updatedUser.contacts);
+              }),
+            );
         }),
       );
   }
+
   // Update a contact in a user
   updateContact(contact: Contact): Observable<any> {
     return this._http
       .get(`${environment.api}/users/${this.getSession().user.id}`)
       .pipe(
-        map((user: any) => ({
-          user,
-          contacts: user.contacts,
-        })),
-        tap(({ user, contacts }) => {
-          const contactToUpdate = contacts?.find(
+        switchMap((user: any) => {
+          const contactToUpdate = user.contacts?.find(
             (existing: any) => existing.id === contact.id,
           );
 
@@ -88,16 +102,15 @@ export class ContactsService {
             return throwError(() => new Error('Contact not found'));
           }
 
+          // Update the user object with the new contact details
           let newUser = this.updateContactObject(user, contact);
 
           console.log('user > update > ', user);
           console.log('newUser >', newUser);
 
+          // Execute the PUT request to update the user
           return this._http
-            .put(
-              `${environment.api}/users/${this.getSession().user.id}`,
-              newUser,
-            )
+            .put(`${environment.api}/users/${newUser.id}`, newUser)
             .pipe(
               tap(() => {
                 // Update local state
@@ -140,59 +153,42 @@ export class ContactsService {
 
   // Delete a contact from a user
   deleteContact(contactId: string): Observable<any> {
-    const user = this.users.find(
-      (user) => user.id === this.getSession().user.id,
-    );
-
-    if (!user) {
-      return throwError(() => new Error('User not found'));
-    }
-    if (user?.contacts) {
-      const contactIndex = user.contacts.findIndex(
-        (contact) => contact.id === contactId,
-      );
-
-      if (contactIndex === -1) {
-        return throwError(() => new Error('Contact not found'));
-      }
-
-      user.contacts.splice(contactIndex, 1);
-    }
     return this._http
-      .put(`${environment.api}/users/${this.getSession().user.id}`, user)
+      .get(`${environment.api}/users/${this.getSession().user.id}`)
       .pipe(
-        tap(() => {
-          // Update local state
-          this.usersSubject.next(this.users);
-          this.contactsSubject.next(user.contacts ? user.contacts : []);
+        switchMap((user: any) => {
+          if (user?.contacts) {
+            const contactIndex = user.contacts.findIndex(
+              (contact: any) => contact.id === contactId,
+            );
+
+            if (contactIndex === -1) {
+              return throwError(() => new Error('Contact not found'));
+            }
+
+            user.contacts.splice(contactIndex, 1);
+          }
+          return this._http
+            .put(`${environment.api}/users/${this.getSession().user.id}`, user)
+            .pipe(
+              tap(() => {
+                // Update local state
+                this.usersSubject.next(this.users);
+                this.contactsSubject.next(user.contacts ? user.contacts : []);
+              }),
+            );
         }),
       );
   }
 
-  // stopSubscriptions() {
-  //   // Reset the BehaviorSubject
-  //   this.contacts = [];
-  //   this.contactsSubject.next(this.contacts);
-
-  //   console.log('Unsubscribing and resetting contacts...');
-  //   this.destroy$.next(); // Emit value to complete subscriptions
-  //   this.destroy$.complete(); // Complete the Subject
-  //   // Optional: Log to verify reset
-  //   console.log('Contacts reset:', this.contacts);
-  //   this.contactsSubject.subscribe((res) => console.log('jueputa 3 > ', res));
-  // }
-
   // Method to reset contacts on login or session start
   resetContacts(): void {
-    console.log('Resetting contacts...');
     this.contacts = [];
     this.contactsSubject.next(this.contacts); // Clear the BehaviorSubject
-    console.log('Contacts cleared:', this.contacts);
   }
 
   // Method to handle unsubscription and clean up
   stopSubscriptions(): void {
-    console.log('Unsubscribing and resetting contacts...');
     this.destroy$.next(); // Emit value to complete subscriptions
     this.destroy$.complete(); // Complete the Subject
 
@@ -208,5 +204,13 @@ export class ContactsService {
       console.error('Error parsing session data:', error);
       return null;
     }
+  }
+
+  private generateUniqueCode(length: number) {
+    var characters = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789'";
+    var code = '';
+    for (let i = 0; i < length; i++)
+      code += characters.charAt(Math.floor(Math.random() * characters.length));
+    return code;
   }
 }

@@ -1,96 +1,80 @@
 {
   "users": [
     {
-      "id": "8829",
-      "email": "test@test.com",
-      "password": "1234",
+      "id": "e1a3",
+      "name": "Romario Estrada",
+      "email": "romaef23@gmail.com",
+      "password": "123",
       "contacts": [
         {
-          "first_name": "hey",
-          "last_name": "rey",
+          "first_name": "Laura",
+          "last_name": "Velazquez",
+          "company": "Admin",
+          "email": "laura@admin.com",
+          "notes": "lau linda",
+          "id": "j'2qP3vajF3e8QXAcqfAbqWzdQKZDD9W",
           "phones": [
             {
-              "phone": "11323213232",
+              "phone": "3215678394",
               "phone_type": {
-                "id": "0f8f",
-                "name": "Other"
+                "id": "6958",
+                "name": "Home"
               }
             }
-          ],
-          "company": "Jum",
-          "email": "jey@re.com",
-          "notes": "asd"
+          ]
         },
         {
-          "first_name": "feo",
-          "last_name": "asdasd",
+          "first_name": "Angye",
+          "last_name": "Estrada",
           "phones": [
             {
-              "phone": "12312211211",
+              "phone": "3245678932",
               "phone_type": {
                 "id": "1359",
                 "name": "Personal"
               }
             }
           ],
-          "company": null,
-          "email": null,
-          "notes": null
-        },
-        {
-          "first_name": "asdas",
-          "last_name": "asdasd",
-          "phones": [
-            {
-              "phone": "13121221232",
-              "phone_type": {
-                "id": "1359",
-                "name": "Personal"
-              }
-            }
-          ],
-          "company": null,
-          "email": null,
-          "notes": "weqwe"
+          "company": "Callcenter",
+          "email": "angye@re.com",
+          "notes": "asdasd",
+          "id": "JkmM24brtIddzPez4hCt7uRLGtLqN7iz"
         }
-      ]
+      ],
+      "creationDate": "06:01:44 GMT-0500 (Colombia Standard Time)"
     },
     {
-      "id": "38dc",
-      "name": "otro",
-      "email": "otro@este.com",
-      "password": "1234"
-    },
-    {
-      "id": "3ab0",
-      "name": "roma",
-      "email": "roma@roma.com",
-      "password": "1234",
-      "contacts": []
-    },
-    {
-      "id": "c0cf",
-      "name": "Last",
-      "email": "one@lasta.com",
-      "password": "one",
+      "id": "997b",
+      "name": "Harrison",
+      "email": "harrison@guitar.com",
+      "password": "harri",
       "contacts": [
         {
-          "first_name": "asdasdasdasd",
-          "last_name": "asdasdasd",
+          "first_name": "Romario",
+          "last_name": "Estrada",
           "phones": [
             {
-              "phone": "1212122222",
+              "phone": "3246160156",
+              "phone_type": {
+                "id": "1359",
+                "name": "Personal"
+              }
+            },
+            {
+              "phone": "23444555556",
               "phone_type": {
                 "id": "1359",
                 "name": "Personal"
               }
             }
           ],
-          "company": "asasd",
-          "email": null,
-          "notes": "asdasd"
+          "company": "Life",
+          "email": "romaef23@gmail.com",
+          "notes": "Cool guy",
+          "id": "4L32XPMwDzPLBpdhNzhb3dW'FfQYQIIf"
         }
-      ]
+      ],
+      "creationDate": "06:08:22 GMT-0500 (Colombia Standard Time)"
     }
   ],
   "types": [

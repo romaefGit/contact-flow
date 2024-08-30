@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError, of, tap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
-import { User, UserImpl } from '../../../models/user.model';
+import { User } from '../../../models/user.model';
 import { ContactsService } from '../../contacts/contacts.service';
 
 @Injectable({
@@ -12,14 +12,15 @@ export class SessionService {
   private contactsService = inject(ContactsService);
   private http = inject(HttpClient);
 
-  register(user: UserImpl): Observable<any> {
+  register(user: User): Observable<any> {
     user['contacts'] = [];
+    user.creationDate = new Date().toTimeString();
     return this.http.post(`${environment.api}/users`, user);
   }
 
-  login(user: UserImpl): Observable<any> {
-    return this.http.get<UserImpl[]>(`${environment.api}/users`).pipe(
-      map((users: UserImpl[]) => {
+  login(user: User): Observable<any> {
+    return this.http.get<User[]>(`${environment.api}/users`).pipe(
+      map((users: User[]) => {
         const foundUser = users.find((u) => u.email === user.email);
 
         if (!foundUser) {

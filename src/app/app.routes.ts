@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { loggedOutGuard } from './core/guards/loggedout.guard';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
+    canActivate: [loggedOutGuard],
     children: [
       {
         path: 'login',

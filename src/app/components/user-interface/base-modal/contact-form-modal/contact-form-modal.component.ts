@@ -99,7 +99,7 @@ export class ContactFormModalComponent implements OnInit {
       ),
       company: ['', Validators.pattern(this.wordPattern)],
       email: ['', [Validators.email]],
-      notes: ['', Validators.pattern(this.wordPattern)],
+      notes: [''],
     });
 
     this.initForm = true;
@@ -107,22 +107,20 @@ export class ContactFormModalComponent implements OnInit {
 
   /**
    * Opens the modal dialog and resets the form.
-   * Sets the `submitting` flag to `false` and clears the form fields.
+   * clears the form fields.
    * This method is typically called when the user initiates a create or update action.
    */
   openDialog() {
-    this.submitting = false;
     this.contactForm.reset();
     this.dialog.openDialog();
   }
 
   /**
    * Closes the modal dialog and resets the form.
-   * Resets the `submitting` flag to `false` and clears the form fields.
+   * clears the form fields.
    * This method is typically called when the user cancels an action.
    */
   closeDialog() {
-    this.submitting = false;
     this.contactForm.reset();
     this.dialog.closeDialog();
   }
@@ -238,13 +236,11 @@ export class ContactFormModalComponent implements OnInit {
   submitForm() {
     this.markAllControlsAsTouched(this.contactForm);
     const dataToSave = this.contactForm.value;
-    console.log('dataToSave > ', dataToSave);
+    // console.log('dataToSave > ', dataToSave);
 
-    console.log('this.contactForm.invalid > ', this.contactForm.invalid);
+    // console.log('this.contactForm.invalid > ', this.contactForm.invalid);
 
     if (!this.contactForm.invalid) {
-      console.log('lego');
-
       this.contactsService.saveContact(dataToSave).subscribe({
         next: (res) => {
           this.serverMessage.type = 'success';
@@ -256,6 +252,7 @@ export class ContactFormModalComponent implements OnInit {
         error: (err) => {
           this.serverMessage.type = 'error';
           this.serverMessage.message = err?.message;
+          this.messageModal.openDialog();
         },
         complete: () => {
           this.submitting = false;

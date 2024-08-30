@@ -30,7 +30,7 @@ import { Contact } from '../../../../core/models/contacts.model';
 import { MessageModalComponent } from '../message-modal/message-modal.component';
 
 @Component({
-  selector: 'app-edit-contact-form',
+  selector: 'app-edit-contact-form-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     BaseModalComponent,
@@ -46,10 +46,10 @@ import { MessageModalComponent } from '../message-modal/message-modal.component'
     MessageModalComponent,
   ],
   standalone: true,
-  templateUrl: './edit-contact-form.component.html',
-  styleUrl: './edit-contact-form.component.scss',
+  templateUrl: './edit-contact-form-modal.component.html',
+  styleUrl: './edit-contact-form-modal.component.scss',
 })
-export class EditContactFormComponent implements OnInit, OnDestroy {
+export class EditContactFormModalComponent implements OnInit, OnDestroy {
   @ViewChild('dialog') dialog!: BaseModalComponent;
   @ViewChild('messageModal') messageModal!: MessageModalComponent;
   @Input() action = new EventEmitter<any>();

@@ -5,22 +5,6 @@ export interface User {
   name?: string;
   email: string;
   password?: string;
-  active?: string;
   creationDate?: string;
   contacts?: Contacts;
-}
-
-export class UserImpl implements User {
-  id!: string;
-  _id!: string;
-  email!: string;
-  name?: string;
-  active?: string;
-  creationDate?: string;
-  password?: string;
-  contacts?: Contacts;
-
-  constructor() {
-    this.contacts = [];
-  }
 }

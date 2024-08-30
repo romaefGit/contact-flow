@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { UserImpl } from '../../../core/models/user.model';
+import { User } from '../../../core/models/user.model';
 import { InputTextComponent } from '../../../components/form/input-text/input-text.component';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../components/user-interface/button/button.component';
 import { SessionService } from '../../../core/services/user/session/session.service';
-import { Session } from '../../../core/models/session.model';
 import { MessageModalComponent } from '../../../components/user-interface/base-modal/message-modal/message-modal.component';
 
 @Component({
@@ -27,6 +27,7 @@ import { MessageModalComponent } from '../../../components/user-interface/base-m
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  @ViewChild('messageModal') messageModal!: MessageModalComponent;
   private sessionService = inject(SessionService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
@@ -47,7 +48,7 @@ export class LoginComponent {
 
   formatLoginForm() {
     this.loginForm = this.formBuilder.group({
-      email: [''],
+      email: ['', Validators.email],
       password: [''],
     });
   }
@@ -55,17 +56,17 @@ export class LoginComponent {
   submitForm() {
     this.isSubmitted = true;
 
-    const user: UserImpl = this.loginForm.getRawValue();
+    const user: User = this.loginForm.getRawValue();
 
     if (this.loginForm.valid) {
       this.sessionService.login(user).subscribe({
-        next: (response: Session) => {
+        next: (response: any) => {
           this.router.navigate(['contacts']);
         },
         error: (error: any) => {
           this.serverMessage.type = 'error';
           this.serverMessage.message = error?.message;
-          throw new Error(error);
+          this.messageModal.openDialog();
         },
       });
     } else {

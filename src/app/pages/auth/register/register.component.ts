@@ -1,11 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { UserImpl } from '../../../core/models/user.model';
+import { User } from '../../../core/models/user.model';
 import { InputTextComponent } from '../../../components/form/input-text/input-text.component';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../components/user-interface/button/button.component';
@@ -25,6 +26,8 @@ import { MessageModalComponent } from '../../../components/user-interface/base-m
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild('messageModal') messageModal!: MessageModalComponent;
+
   private sessionService = inject(SessionService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
@@ -36,6 +39,7 @@ export class RegisterComponent implements OnInit {
     type: 'success',
     message: 'Success operation',
   };
+  wordPattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // words only
 
   constructor() {}
 
@@ -45,8 +49,8 @@ export class RegisterComponent implements OnInit {
 
   formatReactiveForm() {
     this.signupForm = this.formBuilder.group({
-      name: [''],
-      email: [''],
+      name: ['', Validators.pattern(this.wordPattern)],
+      email: ['', Validators.email],
       password: [''],
     });
   }
@@ -54,13 +58,14 @@ export class RegisterComponent implements OnInit {
   submitForm() {
     this.isSubmitted = true;
 
-    const user: UserImpl = this.signupForm.getRawValue();
+    const user: User = this.signupForm.getRawValue();
 
     if (this.signupForm.valid) {
       this.sessionService.register(user).subscribe({
-        next: (response: UserImpl) => {
+        next: (response: User) => {
           this.serverMessage.type = 'success';
           this.serverMessage.message = 'Yor account was created successfully!';
+          this.messageModal.openDialog();
           setTimeout(() => {
             this.router.navigate(['/auth/login']);
           }, 2000);
@@ -68,6 +73,7 @@ export class RegisterComponent implements OnInit {
         error: (error: any) => {
           this.serverMessage.type = 'error';
           this.serverMessage.message = error?.message;
+          this.messageModal.openDialog();
           throw new Error(error);
         },
       });

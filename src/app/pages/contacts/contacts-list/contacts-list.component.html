@@ -34,70 +34,78 @@
         <div class="table-cell cell-head">Action</div>
       </div>
       @if ($filteredContacts | async; as cons) {
-        @for (contact of cons; track $index; let e = $even) {
-          <div class="table-row" [ngClass]="{ even: e }">
-            <div class="table-cell name-cell highlighted">
-              <div class="table-cell--content title-content">
-                {{ contact?.first_name + " " + contact?.last_name }}
+        @if (cons.length > 0) {
+          @for (contact of cons; track $index; let e = $even) {
+            <div class="table-row" [ngClass]="{ even: e }">
+              <div class="table-cell name-cell highlighted">
+                <div class="table-cell--content title-content limit-line-3">
+                  {{ contact?.first_name + " " + contact?.last_name }}
+                </div>
+              </div>
+              <div class="table-cell">
+                <div class="table-cell--heading">Phone</div>
+                <div class="table-cell--content phone-content limit-line-8">
+                  @if (contact?.phones) {
+                    <ul class="pl-0 mt-0 mb-0">
+                      @for (item of contact?.phones; track $index) {
+                        <li class="w-full mb-2 ml-1">
+                          {{ item.phone }} - {{ item.phone_type.name }}
+                        </li>
+                      }
+                    </ul>
+                  }
+                </div>
+              </div>
+              <div class="table-cell">
+                <div class="table-cell--heading">Company</div>
+                <div class="table-cell--content company-content limit-line-1">
+                  {{ contact?.company ? contact?.company : "------" }}
+                </div>
+              </div>
+              <div class="table-cell">
+                <div class="table-cell--heading">E-mail</div>
+                <div class="table-cell--content email-content limit-line-1">
+                  {{ contact?.email ? contact?.email : "------" }}
+                </div>
+              </div>
+              <div class="table-cell table-cell--foot">
+                <div class="table-cell--heading">Notes</div>
+                <div class="table-cell--content limit-line-4">
+                  {{ contact?.notes ? contact?.notes : "------" }}
+                </div>
+              </div>
+              <div class="table-cell table-cell--foot">
+                <div class="table-cell--heading">Actions</div>
+                <div class="table-cell--content actions">
+                  <app-button
+                    class="ml-2 mb-2"
+                    theme="primary"
+                    size="xs"
+                    label=""
+                    iconName="fa-pencil"
+                    iconPosition="center"
+                    iconClass="text-lg pl-1 pr-1"
+                    (click)="openEditContact(contact)"
+                  />
+                  <app-button
+                    class="ml-2 mt-2"
+                    theme="danger"
+                    size="xs"
+                    label=""
+                    iconName="fa-trash"
+                    iconPosition="center"
+                    iconClass="text-lg pl-1 pr-1"
+                    (click)="openConfirmationModal(contact)"
+                  />
+                </div>
               </div>
             </div>
-            <div class="table-cell">
-              <div class="table-cell--heading">Phone</div>
-              <div class="table-cell--content phone-content">
-                @if (contact?.phones) {
-                  <ul class="pl-0 mt-0 mb-0">
-                    @for (item of contact?.phones; track $index) {
-                      <li class="w-full mb-2 ml-1">
-                        {{ item.phone }} - {{ item.phone_type.name }}
-                      </li>
-                    }
-                  </ul>
-                }
-              </div>
-            </div>
-            <div class="table-cell">
-              <div class="table-cell--heading">Company</div>
-              <div class="table-cell--content company-content">
-                {{ contact?.company ? contact?.company : "------" }}
-              </div>
-            </div>
-            <div class="table-cell">
-              <div class="table-cell--heading">E-mail</div>
-              <div class="table-cell--content email-content">
-                {{ contact?.email ? contact?.email : "------" }}
-              </div>
-            </div>
-            <div class="table-cell table-cell--foot">
-              <div class="table-cell--heading">Notes</div>
-              <div class="table-cell--content">
-                {{ contact?.notes ? contact?.notes : "------" }}
-              </div>
-            </div>
-            <div class="table-cell table-cell--foot">
-              <div class="table-cell--heading">Actions</div>
-              <div class="table-cell--content actions">
-                <app-button
-                  class="ml-2 mb-2"
-                  theme="primary"
-                  size="xs"
-                  label=""
-                  iconName="fa-pencil"
-                  iconPosition="center"
-                  iconClass="text-lg pl-1 pr-1"
-                  (click)="openEditContact(contact)"
-                />
-                <app-button
-                  class="ml-2 mt-2"
-                  theme="danger"
-                  size="xs"
-                  label=""
-                  iconName="fa-trash"
-                  iconPosition="center"
-                  iconClass="text-lg pl-1 pr-1"
-                  (click)="openConfirmationModal(contact)"
-                />
-              </div>
-            </div>
+          }
+        } @else {
+          <div class="w-full">
+            <p class="text-center text-lg font-bold">
+              There's no contacts data!
+            </p>
           </div>
         }
       }
@@ -111,7 +119,7 @@
     (action)="updateFilteredContacts()"
   />
   @if (openEdit) {
-    <app-edit-contact-form
+    <app-edit-contact-form-modal
       #editContactModal
       title="Edit contact"
       (action)="hearClose($event)"

@@ -4,6 +4,8 @@ import {
   ViewChild,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
@@ -13,7 +15,7 @@ import { SearchInputComponent } from '../../../components/form/search-input/sear
 import { ButtonComponent } from '../../../components/user-interface/button/button.component';
 import { ContactFormModalComponent } from '../../../components/user-interface/base-modal/contact-form-modal/contact-form-modal.component';
 import { Contact, Contacts } from '../../../core/models/contacts.model';
-import { EditContactFormComponent } from '../../../components/user-interface/base-modal/edit-contact-form/edit-contact-form.component';
+import { EditContactFormModalComponent } from '../../../components/user-interface/base-modal/edit-contact-form-modal/edit-contact-form-modal.component';
 import { ContactActiveService } from '../../../core/services/contact-active/contact-active.service';
 import { MessageModalComponent } from '../../../components/user-interface/base-modal/message-modal/message-modal.component';
 import { ConfirmModalComponent } from '../../../components/user-interface/base-modal/confirm-modal/confirm-modal.component';
@@ -28,7 +30,7 @@ import { SessionService } from '../../../core/services/user/session/session.serv
     SearchInputComponent,
     ButtonComponent,
     ContactFormModalComponent,
-    EditContactFormComponent,
+    EditContactFormModalComponent,
     NgClass,
     MessageModalComponent,
     ConfirmModalComponent,
@@ -36,7 +38,7 @@ import { SessionService } from '../../../core/services/user/session/session.serv
   templateUrl: './contacts-list.component.html',
   styleUrl: './contacts-list.component.scss',
 })
-export class ContactsListComponent {
+export class ContactsListComponent implements OnInit, OnDestroy {
   @ViewChild('createContactModal')
   createContactModal!: ContactFormModalComponent;
 
@@ -77,7 +79,7 @@ export class ContactsListComponent {
   updateFilteredContacts() {
     // console.log('this.searchTerm > ');
     this.$filteredContacts = this.contactsService
-      .getContacts()
+      .getContactsObservable()
       .pipe(map((contacts: any) => this.filterContacts(contacts)));
   }
 
@@ -154,5 +156,11 @@ export class ContactsListComponent {
         this.router.navigate(['/auth/login']);
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.contactsService.stopSubscriptions();
   }
 }
