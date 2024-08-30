@@ -11,7 +11,7 @@
           "last_name": "Velazquez",
           "company": "Admin",
           "email": "laura@admin.com",
-          "notes": "lau linda",
+          "notes": "Lau",
           "id": "j'2qP3vajF3e8QXAcqfAbqWzdQKZDD9W",
           "phones": [
             {
@@ -26,6 +26,10 @@
         {
           "first_name": "Angye",
           "last_name": "Estrada",
+          "company": "Callcenter",
+          "email": "angye@re.com",
+          "notes": "Cuidadosa",
+          "id": "JkmM24brtIddzPez4hCt7uRLGtLqN7iz",
           "phones": [
             {
               "phone": "3245678932",
@@ -34,11 +38,31 @@
                 "name": "Personal"
               }
             }
+          ]
+        },
+        {
+          "first_name": "Fernanda",
+          "last_name": "Soto",
+          "phones": [
+            {
+              "phone": "3245678934",
+              "phone_type": {
+                "id": "1359",
+                "name": "Personal"
+              }
+            },
+            {
+              "phone": "3013563893",
+              "phone_type": {
+                "id": "390d",
+                "name": "Office"
+              }
+            }
           ],
-          "company": "Callcenter",
-          "email": "angye@re.com",
-          "notes": "asdasd",
-          "id": "JkmM24brtIddzPez4hCt7uRLGtLqN7iz"
+          "company": "Design",
+          "email": "fer.de@re.com",
+          "notes": "Aplicada",
+          "id": "gJAWJ'LifT2mGrLuTwwrJDE7iNtaxe2i"
         }
       ],
       "creationDate": "06:01:44 GMT-0500 (Colombia Standard Time)"
