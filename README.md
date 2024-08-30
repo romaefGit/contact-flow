@@ -37,8 +37,19 @@ Run `npm run server` for a dev server. Navigate to `http://localhost:3000/`. You
 ```bash
 Endpoints:
 
-http://localhost:3000/contacts
+http://localhost:3000/users
 http://localhost:3000/types
+```
+
+## Use app
+
+When you run the project and the server, you can access:
+
+```bash
+
+http://localhost:4200/auth/register ----- To register a new user account
+http://localhost:4200/auth/login ----- To login into the tool of contacts
+
 ```
 
 ## Work in progress
