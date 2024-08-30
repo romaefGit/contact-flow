@@ -1,4 +1,13 @@
 @defer (on viewport) {
+  <app-button
+    class="logout"
+    theme="secondary"
+    size="sm"
+    label="logout"
+    iconName="fa-power-off"
+    buttonClass="text-md"
+    (click)="logout()"
+  ></app-button>
   <div class="wrapper">
     <div class="mb-4 w-full">
       <app-button
@@ -29,7 +38,7 @@
           <div class="table-row" [ngClass]="{ even: e }">
             <div class="table-cell name-cell highlighted">
               <div class="table-cell--content title-content">
-                {{ contact.first_name + " " + contact.last_name }}
+                {{ contact?.first_name + " " + contact?.last_name }}
               </div>
             </div>
             <div class="table-cell">
@@ -37,7 +46,7 @@
               <div class="table-cell--content phone-content">
                 @if (contact?.phones) {
                   <ul class="pl-0 mt-0 mb-0">
-                    @for (item of contact.phones; track $index) {
+                    @for (item of contact?.phones; track $index) {
                       <li class="w-full mb-2 ml-1">
                         {{ item.phone }} - {{ item.phone_type.name }}
                       </li>
@@ -49,19 +58,19 @@
             <div class="table-cell">
               <div class="table-cell--heading">Company</div>
               <div class="table-cell--content company-content">
-                {{ contact.company ? contact.company : "------" }}
+                {{ contact?.company ? contact?.company : "------" }}
               </div>
             </div>
             <div class="table-cell">
               <div class="table-cell--heading">E-mail</div>
               <div class="table-cell--content email-content">
-                {{ contact.email ? contact.email : "------" }}
+                {{ contact?.email ? contact?.email : "------" }}
               </div>
             </div>
             <div class="table-cell table-cell--foot">
               <div class="table-cell--heading">Notes</div>
               <div class="table-cell--content">
-                {{ contact.notes ? contact.notes : "------" }}
+                {{ contact?.notes ? contact?.notes : "------" }}
               </div>
             </div>
             <div class="table-cell table-cell--foot">
@@ -96,7 +105,11 @@
   </div>
 
   <!-- Modals -->
-  <app-contact-form-modal #createContactModal title="Create new contact" />
+  <app-contact-form-modal
+    #createContactModal
+    title="Create new contact"
+    (action)="updateFilteredContacts()"
+  />
   @if (openEdit) {
     <app-edit-contact-form
       #editContactModal

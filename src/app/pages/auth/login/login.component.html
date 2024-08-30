@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <div class="container p-4">
+    <h1>Login with your account</h1>
+    <form [formGroup]="loginForm">
+      <app-input-text
+        id="email"
+        title="E-mail"
+        [control]="getAsFormControl('email')"
+      />
+
+      <app-input-text
+        id="password"
+        title="Password"
+        type="password"
+        [control]="getAsFormControl('password')"
+      />
+
+      <app-button
+        (click)="submitForm()"
+        theme="primary"
+        size="md"
+        label="Login"
+        iconPosition="left"
+        customWidth="100%"
+        buttonClass="mt-4"
+      />
+
+      <p>
+        New on this?
+        <a [routerLink]="['/auth/register']">Create an account</a>.
+      </p>
+    </form>
+  </div>
+</div>
+
+<app-message-modal
+  #messageModal
+  [type]="serverMessage.type"
+  [message]="serverMessage.message"
+></app-message-modal>

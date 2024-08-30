@@ -1,0 +1,46 @@
+<div class="wrapper">
+  <div class="container p-4">
+    <h1 class="text-center">Register your account</h1>
+    <form [formGroup]="signupForm">
+      <app-input-text
+        id="name"
+        title="Name"
+        [control]="getAsFormControl('name')"
+      />
+
+      <app-input-text
+        id="email"
+        title="E-mail"
+        [control]="getAsFormControl('email')"
+      />
+
+      <app-input-text
+        id="password"
+        title="Password"
+        type="password"
+        [control]="getAsFormControl('password')"
+      />
+
+      <app-button
+        (click)="submitForm()"
+        theme="primary"
+        size="md"
+        label="Signup"
+        iconPosition="left"
+        customWidth="100%"
+        buttonClass="mt-4"
+      />
+
+      <p>
+        You already have an account?
+        <a [routerLink]="['/auth/login']">Go login</a>.
+      </p>
+    </form>
+  </div>
+</div>
+
+<app-message-modal
+  #messageModal
+  [type]="serverMessage.type"
+  [message]="serverMessage.message"
+></app-message-modal>

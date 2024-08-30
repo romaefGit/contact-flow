@@ -12,7 +12,8 @@
     "build:qa": "ng build --configuration=qa",
     "watch": "ng build --watch --configuration=development",
     "test": "ng test",
-    "server": "npx json-server rest-data.json"
+    "server": "npx json-server rest-data.json",
+    "mock-server": "npx json-server ./api-mock/state.json"
   },
   "private": true,
   "dependencies": {

@@ -5,6 +5,8 @@ import {
   Input,
   inject,
   ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { BaseModalComponent } from '../base-modal.component';
 import {
@@ -51,6 +53,8 @@ import { MessageModalComponent } from '../message-modal/message-modal.component'
 export class ContactFormModalComponent implements OnInit {
   @ViewChild('dialog') dialog!: BaseModalComponent;
   @ViewChild('messageModal') messageModal!: MessageModalComponent;
+
+  @Output() action = new EventEmitter<any>();
 
   private readonly contactsService = inject(ContactsService);
   private readonly typesService = inject(TypesService);
@@ -239,25 +243,25 @@ export class ContactFormModalComponent implements OnInit {
     console.log('this.contactForm.invalid > ', this.contactForm.invalid);
 
     if (!this.contactForm.invalid) {
+      console.log('lego');
+
       this.contactsService.saveContact(dataToSave).subscribe({
         next: (res) => {
           this.serverMessage.type = 'success';
           this.serverMessage.message = 'The contact was saved successfully';
           this.messageModal.openDialog();
+          this.action.emit();
           // console.log('res > ', res);
         },
         error: (err) => {
-          // this.serverMessage.type = 'error';
-          // this.serverMessage.message = err?.message
-          //   ? err.message
-          //   : 'Server error';
+          this.serverMessage.type = 'error';
+          this.serverMessage.message = err?.message;
         },
         complete: () => {
           this.submitting = false;
           this.closeDialog();
         },
       });
-      this.contactsService.getContactsObservable();
     }
   }
 

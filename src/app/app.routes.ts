@@ -1,32 +1,39 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'contacts',
+    canActivate: [authGuard],
     children: [
       {
         path: '',
         loadComponent: () =>
           import('./pages/contacts/contacts-list/contacts-list.component').then(
-            (c) => c.ContactsListComponent
-          ),
-      },
-      // { path: 'detail/:something', component: DetailComponent },
-      {
-        path: 'detail/:id',
-        loadComponent: () =>
-          import('./pages/contacts/detail/detail.component').then(
-            (c) => c.DetailComponent
+            (c) => c.ContactsListComponent,
           ),
       },
     ],
   },
-  // {
-  //   path: 'contacts',
-  //   loadComponent: () =>
-  //     import('./pages/contacts/contacts-list/contacts-list.component').then(
-  //       (c) => c.ContactsListComponent
-  //     ),
-  // },
-  { path: '', redirectTo: '/contacts', pathMatch: 'full' },
+  {
+    path: 'auth',
+    children: [
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./pages/auth/login/login.component').then(
+            (c) => c.LoginComponent,
+          ),
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./pages/auth/register/register.component').then(
+            (c) => c.RegisterComponent,
+          ),
+      },
+    ],
+  },
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth/login' },
 ];

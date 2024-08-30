@@ -1,0 +1,118 @@
+{
+  "users": [
+    {
+      "id": "8829",
+      "email": "test@test.com",
+      "password": "1234",
+      "contacts": [
+        {
+          "first_name": "hey",
+          "last_name": "rey",
+          "phones": [
+            {
+              "phone": "11323213232",
+              "phone_type": {
+                "id": "0f8f",
+                "name": "Other"
+              }
+            }
+          ],
+          "company": "Jum",
+          "email": "jey@re.com",
+          "notes": "asd"
+        },
+        {
+          "first_name": "feo",
+          "last_name": "asdasd",
+          "phones": [
+            {
+              "phone": "12312211211",
+              "phone_type": {
+                "id": "1359",
+                "name": "Personal"
+              }
+            }
+          ],
+          "company": null,
+          "email": null,
+          "notes": null
+        },
+        {
+          "first_name": "asdas",
+          "last_name": "asdasd",
+          "phones": [
+            {
+              "phone": "13121221232",
+              "phone_type": {
+                "id": "1359",
+                "name": "Personal"
+              }
+            }
+          ],
+          "company": null,
+          "email": null,
+          "notes": "weqwe"
+        }
+      ]
+    },
+    {
+      "id": "38dc",
+      "name": "otro",
+      "email": "otro@este.com",
+      "password": "1234"
+    },
+    {
+      "id": "3ab0",
+      "name": "roma",
+      "email": "roma@roma.com",
+      "password": "1234",
+      "contacts": []
+    },
+    {
+      "id": "c0cf",
+      "name": "Last",
+      "email": "one@lasta.com",
+      "password": "one",
+      "contacts": [
+        {
+          "first_name": "asdasdasdasd",
+          "last_name": "asdasdasd",
+          "phones": [
+            {
+              "phone": "1212122222",
+              "phone_type": {
+                "id": "1359",
+                "name": "Personal"
+              }
+            }
+          ],
+          "company": "asasd",
+          "email": null,
+          "notes": "asdasd"
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "id": "1359",
+      "name": "Personal"
+    },
+    {
+      "id": "6958",
+      "name": "Home"
+    },
+    {
+      "id": "390d",
+      "name": "Office"
+    },
+    {
+      "id": "2689",
+      "name": "Work"
+    },
+    {
+      "id": "0f8f",
+      "name": "Other"
+    }
+  ]
+}

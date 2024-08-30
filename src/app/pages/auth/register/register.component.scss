@@ -1,0 +1,22 @@
+.wrapper {
+  box-sizing: border-box;
+  background-color: #57a6a1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Montserrat", sans-serif;
+}
+.container {
+  width: 90%;
+  max-width: 520px;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+  background-color: var(--black-color);
+}

@@ -8,7 +8,7 @@ import {
 import { Observable, map, of } from 'rxjs';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { AsyncPipe, NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SearchInputComponent } from '../../../components/form/search-input/search-input.component';
 import { ButtonComponent } from '../../../components/user-interface/button/button.component';
 import { ContactFormModalComponent } from '../../../components/user-interface/base-modal/contact-form-modal/contact-form-modal.component';
@@ -17,6 +17,7 @@ import { EditContactFormComponent } from '../../../components/user-interface/bas
 import { ContactActiveService } from '../../../core/services/contact-active/contact-active.service';
 import { MessageModalComponent } from '../../../components/user-interface/base-modal/message-modal/message-modal.component';
 import { ConfirmModalComponent } from '../../../components/user-interface/base-modal/confirm-modal/confirm-modal.component';
+import { SessionService } from '../../../core/services/user/session/session.service';
 
 @Component({
   selector: 'app-contacts-list',
@@ -48,9 +49,9 @@ export class ContactsListComponent {
   @ViewChild('messageModal') messageModal!: MessageModalComponent;
 
   private readonly contactsService = inject(ContactsService);
+  private readonly sessionService = inject(SessionService);
   private readonly contactActiveService = inject(ContactActiveService);
-  $contacts: Observable<Contacts> =
-    this.contactsService.getContactsObservable();
+  private router = inject(Router);
 
   $filteredContacts: Observable<Contacts> = of([]); // Observable for the filtered contacts
   searchTerm: string = '';
@@ -73,11 +74,11 @@ export class ContactsListComponent {
     });
   }
 
-  private updateFilteredContacts() {
+  updateFilteredContacts() {
     // console.log('this.searchTerm > ');
     this.$filteredContacts = this.contactsService
-      .getContactsObservable()
-      .pipe(map((contacts) => this.filterContacts(contacts)));
+      .getContacts()
+      .pipe(map((contacts: any) => this.filterContacts(contacts)));
   }
 
   private filterContacts(contacts: Contacts): Contacts {
@@ -145,5 +146,13 @@ export class ContactsListComponent {
   hearClose(e: any) {
     this.openEdit = false;
     this.contactToEdit = null;
+  }
+
+  logout() {
+    this.sessionService.logout().subscribe({
+      next: (value) => {
+        this.router.navigate(['/auth/login']);
+      },
+    });
   }
 }

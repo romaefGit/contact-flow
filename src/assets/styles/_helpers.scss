@@ -42,7 +42,7 @@
   "pr",
   "padding-right"
 ); // Generates .pr-1 to .pr-10
-@include generate-space-classes("p", "padding"); // Generates .m-1 to .m-10
+@include generate-space-classes("p", "padding"); // Generates .p-1 to .p-10
 
 .relative {
   position: relative;
@@ -63,6 +63,9 @@
 .right {
   position: absolute;
   right: 0px;
+}
+.text-center {
+  text-align: center;
 }
 
 .text-xs {
