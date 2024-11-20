@@ -1,7 +1,5 @@
 # Contact Crud Roma
 
-`https://romaefportfolio.web.app/assets/img/web/crud/crud_5.avif`
-
 ![(https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png)](https://romaefportfolio.web.app/assets/img/web/crud/crud_5.avif)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2. The application allows you to manage contacts by adding, editing, and deleting them. Each contact can store multiple phone numbers along with other details like personal email and notes.
